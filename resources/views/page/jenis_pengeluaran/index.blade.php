@@ -1,49 +1,49 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Jenis Pengeluaran') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-center">
+            <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-3/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
-                                FORM INPUT jenis_pengeluaran
+                            <div class="p-3 font-bold text-xl text-slate-800">
+                                Input Jenis Pengeluaran
                             </div>
                             <form action="{{ route('jenis_pengeluaran.store') }}" method="post">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="mb-5">
                                         <label for="jenis_pengeluaran"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">jenis_pengeluaran</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Pengeluaran</label>
                                         <input type="text" id="jenis_pengeluaran" name="jenis_pengeluaran"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Masukan Nama jenis_pengeluaran disini ..." required />
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#0C4B54] focus:border-blue-950 block w-full p-2.5"
+                                            placeholder="Masukan Nama Jenis Pengeluaran disini ..." required />
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Simpan</button>
+                                        class="text-white bg-[#0C4B54] hover:bg-[#13393f] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl shadow-md text-sm w-full sm:w-auto px-5 py-2.5 text-center">Simpan</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
                 <div class="w-full md:w-9/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
-                                DATA jenis_pengeluaran
+                            <div class="px-10 py-4 font-bold text-xl text-slate-800">
+                                Data Jenis Pengeluaran
                             </div>
-                            <div class="flex justify-center">
-                                <div class="p-12" style="width:100%">
-                                    <table class="table table-bordered" id="jenis_pengeluaran-datatable">
+                            <div class="flex justify-center overflow-hidden">
+                                <div class="py-10 md:p-12" style="width:100%">
+                                    <table class="table table-bordered overflow-x-scroll" id="jenis_pengeluaran-datatable">
                                         <thead>
                                             <tr>
                                                 <th class="w-7">No.</th>
-                                                <th>jenis_pengeluaran</th>
+                                                <th>Jenis Pengeluaran</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
