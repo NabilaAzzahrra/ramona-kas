@@ -15,4 +15,9 @@ class Klasifikasi extends Model
     ];
 
     protected $table = 'klasifikasi';
+
+    public function pendapatan()
+    {
+        return $this->hasMany(Pendapatan::class, 'id_klasifikasi');
+    }
 }

@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('pendapatan', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_klasifikasi');
+            $table->string('item_pendapatan');
+            $table->date('tgl_pendapatan');
+            $table->integer('tagihan');
+            $table->integer('retur');
+            $table->integer('penerimaan');
+            $table->integer('kekurangan');
+            $table->integer('kelebihan');
+            $table->string('keterangan');
+            $table->integer('user');
             $table->timestamps();
         });
     }

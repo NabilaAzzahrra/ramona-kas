@@ -20,8 +20,93 @@
     {{-- Fontawesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
+    {{-- Select2 --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        html,
+        /* body {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            font-family: 'Source Code Pro', monospace;
+        } */
+
+        td,
+        th {
+            white-space: nowrap;
+        }
+
+        .dataTables_length>label {
+            font-size: 14px !important;
+            color: #6b7280 !important;
+        }
+
+        .dataTables_info,
+        .paginate_button {
+            font-size: 14px !important;
+            color: #6b7280 !important;
+        }
+
+        .dataTables_length>label>select {
+            font-size: 14px !important;
+            padding: 3px 20px 3px 15px !important;
+            border-radius: 10px !important;
+            margin: 5px !important;
+        }
+
+        .dataTables_filter>label {
+            font-size: 14px !important;
+        }
+
+        .dataTables_filter>label>input {
+            margin: 5px !important;
+            border-radius: 10px !important;
+        }
+
+        /* .js-example-placeholder-single {
+            height: 1000px;
+        } */
+
+        .select2-container .select2-selection--single {
+            width: 100% !important;
+            background-color: #f9fafb;
+            border: 1px solid #d1d5db !important;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            height: 43px;
+            border-radius: 0.4rem;
+            color: #1f2937;
+        }
+
+        .select2-container .select2-selection--single .select2-selection__arrow {
+            top: 20% !important;
+            right: 8px;
+        }
+
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            font-size: 14px !important;
+            top: -2px;
+            left: -6px;
+            position: relative;
+            color: #1f2937;
+        }
+
+        .select2-search__field {
+            font-size: 14px !important;
+            border-radius: 0.5rem;
+        }
+
+        .select2-results {
+            font-size: 14px !important;
+            border-radius: 0px 10px 0px 10px;
+        }
+    </style>
+
 </head>
 
 <body class="font-sans antialiased">
@@ -42,6 +127,18 @@
             {{ $slot }}
         </main>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        // In your Javascript (external .js resource or <script> tag)
+        $(".js-example-placeholder-single").select2({
+            placeholder: "Pilih...",
+            allowClear: true
+        });
+    </script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    @stack('scripts')
 </body>
 
 </html>
