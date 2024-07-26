@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>POS Rammona</title>
+        <title>KAS Rammona</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,10 +38,10 @@
                             <nav class="flex  justify-end">
                                 @auth
                                 @else
-                                <div class="flex items-center border rounded-3xl px-5 py-1 font-semibold text-center bg-[#E9F549] hover:text-slate-800 hover:bg-[#cfda41] hover:shadow-sm hover:shadow-slate-400">
+                                <div class="flex items-center border rounded-3xl font-semibold text-center bg-[#E9F549] hover:text-slate-800 hover:bg-[#cfda41] hover:shadow-sm hover:shadow-slate-400">
                                     <a
                                         href="{{ route('login') }}"
-                                        class="text-sm md:text-base font-semibold transition"
+                                        class="text-sm md:text-lg font-semibold transition px-6 py-2"
                                     >
                                         Login
                                     </a>
@@ -72,7 +72,7 @@
                                 <div class="flex flex-col space-y-3">
                                     <h1 class="flex flex-col text-3xl md:text-7xl font-bold text-slate-200 leading-relaxed">
                                         Selamat Datang
-                                        di Aplikasi POS
+                                        di Aplikasi KAS
                                         <span class="text-[#E9F549]">Roti Rammona</span>
                                     </h1>
                                     <p class="text-slate-300 font-normal text-base md:text-lg">

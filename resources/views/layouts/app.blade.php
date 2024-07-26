@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'POS Rammona') }}</title>
+    <title>KAS Rammona</title>
 
     <!-- Fonts -->
     <!-- <link rel="preconnect" href="https://fonts.bunny.net"> -->
@@ -45,7 +45,7 @@
         <!-- Page Heading -->
         @isset($header)
             <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-8xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-8xl mx-auto py-4 px-2 sm:px-4 lg:px-6">
                     {{ $header }}
                 </div>
             </header>
