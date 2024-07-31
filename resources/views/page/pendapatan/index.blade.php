@@ -14,6 +14,9 @@
                             <div class="p-6 bg-red-500 rounded-xl flex items-center justify-between">
                                 <div>DATA klasifikasi</div>
                                 <div class="flex gap-5">
+                                    <div>
+                                        <a onclick="editSourceModalSaldo()" href="#">Saldo Awal</a>
+                                    </div>
                                     <div><a href="{{ route('pendapatan.create') }}">Tambah</a></div>
                                     <button onclick="filter(this)" data-modal-target="sourceModal"
                                         class="bg-sky-400 py-2 px-4 rounded-lg text-white hover:bg-sky-500"><i
@@ -91,6 +94,43 @@
             </div>
         </div>
     </div>
+
+    <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModalSaldo">
+        <div class="fixed inset-0 bg-black opacity-50"></div>
+        <div class="fixed inset-0 flex items-center justify-center">
+            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
+                <div class="flex items-start justify-between p-4 border-b rounded-t">
+                    <h3 class="text-xl font-semibold text-gray-900" id="title_source_saldo">
+                        Input Saldo Awal
+                    </h3>
+                    <button type="button" onclick="sourceModalClose()"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <form action="{{ route('saldo.store') }}" method="post">
+                    <div class="flex flex-col p-4 space-y-6">
+                        @csrf
+                        <div>
+                            <label for="saldo" class="block mb-2 text-sm font-medium text-gray-900">Saldo
+                                Awal</label>
+                            <input type="number" id="saldo" name="saldo"
+                                class="px-3 py-2 border shadow rounded w-full block text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer hover:shadow-lg"
+                                placeholder="Masukan saldo awal disini...">
+                        </div>
+                    </div>
+                    <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
+                        <button type="submit" id="formSourceButton" onclick="changeFilterDataRegisterProgram()"
+                            class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
+                        <button type="button" onclick="sourceModalClose()"
+                            class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     @push('scripts')
         <script src="{{ asset('js/exceljs.min.js') }}"></script>
         <script>
@@ -436,5 +476,34 @@
                 console.error('Error:', error);
             }
         };
+    </script>
+    <script>
+        const editSourceModalSaldo = (button) => {
+            const formModal = document.getElementById('sourceModalSaldo');
+            const formElement = document.getElementById('formSourceModal');
+            const url = "{{ route('saldo.store') }}";
+            console.log(url);
+            const titleSource = document.getElementById('title_source_saldo');
+            const formSourceButton = document.getElementById('formSourceButton');
+
+            titleSource.innerText = `Input Saldo Awal`;
+            formSourceButton.innerText = 'Simpan';
+
+            const csrfToken = document.createElement('input');
+            csrfToken.setAttribute('type', 'hidden');
+            csrfToken.setAttribute('name', '_token');
+            csrfToken.setAttribute('value', '{{ csrf_token() }}');
+
+            // formElement.appendChild(csrfToken);
+
+            const methodInput = document.createElement('input');
+            methodInput.setAttribute('type', 'hidden');
+            methodInput.setAttribute('name', '_method');
+            methodInput.setAttribute('value', 'PATCH');
+
+            // formElement.appendChild(methodInput);
+
+            formModal.classList.toggle('hidden');
+        }
     </script>
 </x-app-layout>

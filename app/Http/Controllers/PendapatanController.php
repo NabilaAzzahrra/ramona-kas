@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Klasifikasi;
 use App\Models\Pendapatan;
+use App\Models\Saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,6 +49,18 @@ class PendapatanController extends Controller
 
         Pendapatan::create($data);
 
+        $datasaldo = [
+            'penerimaan' => $request->input('penerimaan'),
+        ];
+
+        $datas = Saldo::all();
+        // $datas->update($datasaldo);
+
+        foreach ($datas as $d) {
+            $d->saldo += $request->input('penerimaan');
+            $d->save();
+        }
+
         return redirect()
             ->route('pendapatan.index')
             ->with('message', 'Data Pendapatan Sudah ditambahkan');
@@ -90,6 +103,26 @@ class PendapatanController extends Controller
             'kekurangan' => $request->input('kekurangan'),
             'user' => Auth::user()->id,
         ];
+
+        $penerimaan_awal = $request->input('penerimaan_awal');
+        $penerimaan = $request->input('penerimaan');
+
+        $datas = Saldo::all();
+
+        if ($penerimaan_awal > $penerimaan) {
+            $hasil = $penerimaan_awal - $penerimaan;
+            foreach ($datas as $d) {
+                $d->saldo -= $hasil;
+                $d->save();
+            }
+        } else {
+            $hasil = $penerimaan - $penerimaan_awal;
+            foreach ($datas as $d) {
+                $d->saldo += $hasil;
+                $d->save();
+            }
+        }
+
 
         $datas = Pendapatan::findOrFail($id);
         $datas->update($data);

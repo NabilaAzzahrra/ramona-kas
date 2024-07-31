@@ -72,14 +72,23 @@
                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pendapatan</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('jenis_pengeluaran.index') }}"
+                                    <a href="{{ route('pengeluaran.index') }}"
                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pengeluaran</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
                 </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Laporan') }}
+                    </x-nav-link>
+                </div>
+
             </div>
+
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">

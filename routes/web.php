@@ -3,7 +3,9 @@
 use App\Http\Controllers\JenispengeluaranController;
 use App\Http\Controllers\KlasifikasiController;
 use App\Http\Controllers\PendapatanController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SaldoController;
 use App\Models\Jenispengeluaran;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +20,8 @@ Route::get('/dashboard', function () {
 Route::resource('klasifikasi',KlasifikasiController::class)->middleware(['auth']);
 Route::resource('jenis_pengeluaran',JenispengeluaranController::class)->middleware(['auth']);
 Route::resource('pendapatan',PendapatanController::class)->middleware(['auth']);
+Route::resource('saldo',SaldoController::class)->middleware(['auth']);
+Route::resource('pengeluaran',PengeluaranController::class)->middleware(['auth']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
