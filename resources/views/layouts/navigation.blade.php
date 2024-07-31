@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-white shadow-md dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -11,7 +11,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px text-lg sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -19,11 +19,10 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <li class="relative list-none">
-                        <button onclick="dropdownDigital()" id="dropdownNavbarLink"
-                            data-dropdown-toggle="dropdownNavbar"
-                            class="{{ request()->routeIs('dashboard') ? 'text-gray-900' : 'text-gray-500' }}
-                    flex mt-6 items-center justify-between w-full text-sm py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Master
+                    <li x-data="{ isOpen: false }" @click.away="isOpen = false" class="relative list-none">
+                        <button type="button" @click="isOpen = !isOpen"
+                            class="{{ request()->routeIs('Dashboard') ? 'text-gray-900' : 'text-gray-500' }}
+                    flex mt-6 items-center justify-between w-full text-lg font-medium py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Master
                             <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -31,31 +30,29 @@
                             </svg>
                         </button>
                         <!-- Dropdown menu -->
-                        <div id="digitalNavbar"
-                            class="absolute z-10 top-[60px] hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-400"
-                                aria-labelledby="dropdownLargeButton">
-                                <li>
-                                    <a href="{{ route('klasifikasi.index') }}"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Klasifikasi</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('jenis_pengeluaran.index') }}"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jenis
-                                        Pengeluaran</a>
-                                </li>
-                            </ul>
-                        </div>
+                        
+                            <div class="bg-white shadow-md rounded-md px-2">
+                                <ul x-show="isOpen" class="py-2 text-sm text-gray-700 dark:text-gray-400">
+                                    <li>
+                                        <a href="{{ route('klasifikasi.index') }}"
+                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Klasifikasi</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('jenis_pengeluaran.index') }}"
+                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jenis
+                                            Pengeluaran</a>
+                                    </li>
+                                </ul>
+                            </div>
                     </li>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <li class="relative list-none">
-                        <button onclick="dropdownDigitall()" id="dropdownNavbarLinkk"
-                            data-dropdown-toggle="dropdownNavbar"
+                    <li x-data="{ isOpen: false }" @click.away="isOpen = false" class="relative list-none">
+                        <button type="button" @click="isOpen = !isOpen"
                             class="{{ request()->routeIs('dashboard') ? 'text-gray-900' : 'text-gray-500' }}
-                    flex mt-6 items-center justify-between w-full text-sm py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Transaksi
+                    flex mt-6 items-center justify-between w-full text-lg py-2 px-3 rounded font-medium hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Transaksi
                             <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -63,9 +60,8 @@
                             </svg>
                         </button>
                         <!-- Dropdown menu -->
-                        <div id="digitalNavbarr"
-                            class="absolute z-10 top-[60px] hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-400"
+                        <div class="bg-white shadow-md rounded-md px-2">
+                            <ul x-show="isOpen" class="py-2 text-sm text-gray-700 dark:text-gray-400"
                                 aria-labelledby="dropdownLargeButton">
                                 <li>
                                     <a href="{{ route('pendapatan.index') }}"
@@ -95,7 +91,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
-                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-md leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400  bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -150,6 +146,63 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex mt-10">
+                <li x-data="{ isOpen: false }" @click.away="isOpen = false" class="relative list-none">
+                    <button type="button" @click="isOpen = !isOpen"
+                        class="{{ request()->routeIs('Dashboard') ? 'text-gray-900' : 'text-gray-500' }}
+                flex mt-6 items-center justify-between w-full text-lg font-medium py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Master
+                        <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    
+                        <div class="bg-white shadow-md rounded-md px-2">
+                            <ul x-show="isOpen" class="py-2 text-sm text-gray-700 dark:text-gray-400">
+                                <li>
+                                    <a href="{{ route('klasifikasi.index') }}"
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Klasifikasi</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('jenis_pengeluaran.index') }}"
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jenis
+                                        Pengeluaran</a>
+                                </li>
+                            </ul>
+                        </div>
+                </li>
+            </div>
+
+            <div class="space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <li x-data="{ isOpen: false }" @click.away="isOpen = false" class="relative list-none">
+                    <button type="button" @click="isOpen = !isOpen"
+                        class="{{ request()->routeIs('dashboard') ? 'text-gray-900' : 'text-gray-500' }}
+                flex mt-6 items-center justify-between w-full text-lg py-2 px-3 rounded font-medium hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Transaksi
+                        <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div class="bg-white shadow-md rounded-md px-2">
+                        <ul x-show="isOpen" class="py-2 text-sm text-gray-700 dark:text-gray-400"
+                            aria-labelledby="dropdownLargeButton">
+                            <li>
+                                <a href="{{ route('pendapatan.index') }}"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pendapatan</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('jenis_pengeluaran.index') }}"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pengeluaran</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </div>
         </div>
 
         <!-- Responsive Settings Options -->
