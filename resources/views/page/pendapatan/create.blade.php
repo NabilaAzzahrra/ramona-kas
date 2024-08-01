@@ -1,19 +1,20 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+        <h2 class="font-semibold text-xl px-6 text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Input Pendapatan') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center">
                 <div class="w-full md:w-9/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl">
+                            <div class="p-3 rounded-xl font-bold text-slate-800 text-lg">
                                 FORM INPUT PENDAPATAN
                             </div>
+                            <hr>
                             <form action="{{ route('pendapatan.store') }}" method="post">
                                 @csrf
                                 <div class="p-4 rounded-xl">
@@ -89,7 +90,7 @@
                                         </div>
                                     </div>
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Simpan</button>
+                                        class="text-white bg-[#0C4B54] hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Simpan</button>
                                 </div>
                             </form>
                         </div>
