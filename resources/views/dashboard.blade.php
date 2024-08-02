@@ -1,11 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="px-3 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
 
-    <div class="mx-3">
+    {{-- <div class="mx-3">
         <div class="pt-5">
             <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% dark:bg-gray-800 overflow-hidden shadow-md rounded-xl">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     
         <div class="pt-5">
             <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
@@ -32,13 +32,13 @@
                                 </div>
                                 <div class="font-semibold text-slate-700 text-lg px-1">Klasifikasi</div>
                             </div>
-                            <div class="font-bold text-slate-900 text-4xl pt-3">
+                            <div class="font-bold text-slate-900 text-4xl py-3">
                                 22
                             </div>
                         </div>
-                        <div class="flex justify-between px-6 py-2 rounded-b-xl shadow-md bg-slate-200">
+                        <div class="flex justify-between px-6 py-2 -mt-2 rounded-b-xl shadow-md bg-[#0C4B54]">
                             <p class="text-sm text-emerald-400 font-semibold">12%</p>
-                            <p class="text-sm text-slate-700">Klasifikasi Per Hari Ini</p>
+                            <p class="text-sm text-slate-200">Klasifikasi Per Hari Ini</p>
                         </div>
                     </div>
                     
@@ -50,13 +50,13 @@
                                 </div>
                                 <div class="font-semibold text-slate-700 text-lg px-1">Jenis Pengeluaran</div>
                             </div>
-                            <div class="font-bold text-slate-900 text-4xl pt-3">
+                            <div class="font-bold text-slate-900 text-4xl py-3">
                                 30
                             </div>
                         </div>
-                        <div class="flex justify-between px-6 py-2 rounded-b-xl shadow-md bg-slate-200">
+                        <div class="flex justify-between px-6 py-2 -mt-2 rounded-b-xl shadow-md bg-[#0C4B54]">
                             <p class="text-sm text-emerald-400 font-semibold">15%</p>
-                            <p class="text-sm text-slate-700">Jenis Pengeluaran Per Hari Ini</p>
+                            <p class="text-sm text-slate-200">Jenis Pengeluaran Per Hari Ini</p>
                         </div>
                     </div>
     
@@ -68,13 +68,13 @@
                                 </div>
                                 <div class="font-semibold text-slate-700 text-lg px-1">Pendapatan</div>
                             </div>
-                            <div class="font-bold text-slate-900 text-4xl pt-3">
+                            <div class="font-bold text-slate-900 text-4xl py-3">
                                 Rp. 15.000.000
                             </div>
                         </div>
-                        <div class="flex justify-between px-6 py-2 rounded-b-xl shadow-md bg-slate-200">
+                        <div class="flex justify-between px-6 py-2 -mt-2 rounded-b-xl shadow-md bg-[#0C4B54]">
                             <p class="text-sm text-emerald-400 font-semibold">30%</p>
-                            <p class="text-sm text-slate-700">Pendapatan Per Hari Ini</p>
+                            <p class="text-sm text-slate-200">Pendapatan Per Hari Ini</p>
                         </div>
                     </div>
     
@@ -86,13 +86,13 @@
                                 </div>
                                 <div class="font-semibold text-slate-700 text-lg px-1">Pengeluaran</div>
                             </div>
-                            <div class="font-bold text-slate-900 text-4xl pt-3">
+                            <div class="font-bold text-slate-900 text-4xl py-3">
                                 Rp. 1.250.000
                             </div>
                         </div>
-                        <div class="flex justify-between px-6 py-2 rounded-b-xl shadow-md bg-slate-200">
+                        <div class="flex justify-between px-6 py-2 -mt-2 rounded-b-xl shadow-md bg-[#0C4B54]">
                             <p class="text-sm text-red-400 font-semibold">10%</p>
-                            <p class="text-sm text-slate-700">Pengeluaran Per Hari Ini</p>
+                            <p class="text-sm text-slate-200">Pengeluaran Per Hari Ini</p>
                         </div>
                     </div>
                 </div>
@@ -103,11 +103,11 @@
         <div class="max-w-8xl px-6 lg:px-8 py-5 lg:py-5 mt-5 mb-2 md:mx-8 rounded-xl bg-white">
             <div class="flex flex-col md:flex-row gap-5">
                 <div class="md:w-1/2 border rounded-2xl">
-                    <h1 class="font-bold text-[#0C4B54] text-md md:text-xl rounded-t-xl bg-slate-300 p-3 text-center">Pendapatan</h1>
+                    <h1 class="font-bold text-slate-100 text-md md:text-xl rounded-t-xl bg-[#0C4B54] p-3 text-center">Pendapatan</h1>
                     <canvas id="Chartmasuk"></canvas>
                 </div>
                 <div class="md:w-1/2 border rounded-2xl">
-                    <h1 class="font-bold text-[#0C4B54] text-md md:text-xl rounded-t-xl bg-slate-300 p-3 text-center">Pengeluaran</h1>
+                    <h1 class="font-bold text-slate-100 text-md md:text-xl rounded-t-xl bg-[#0C4B54] p-3 text-center">Pengeluaran</h1>
                     <canvas id="Chartkeluar"></canvas>
                 </div>
             </div>

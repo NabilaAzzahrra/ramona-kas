@@ -1,24 +1,25 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="px-3 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Pengeluaran') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-6">
+        <div class="max-w-8/12 mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center">
-                <div class="w-full md:w-9/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl flex items-center justify-between">
-                                <div>DATA PENGELUARAN</div>
+                <div class="w-full p-3">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-xl">
+                        <div class="p-3 text-gray-900 dark:text-gray-100">
+                            <div class="m-4 p-3 bg-slate-50 rounded-xl flex flex-col md:flex-row items-center md:justify-between">
+                                <div class="px-2 font-bold text-slate-800 text-lg">DATA PENGELUARAN</div>
                                 <div class="flex gap-5">
-                                    <div><a href="{{ route('pengeluaran.create') }}">Tambah</a></div>
+                                    <div><a href="{{ route('pengeluaran.create') }}" class="flex items-center gap-1 bg-[#0C4B54] hover:bg-[#0c3454] text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        Tambah</a></div>
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%">
+                                <div class="pt-3 px-4" style="width:100%">
                                     <table class="table table-bordered" id="pengeluaran-datatable">
                                         <thead>
                                             <tr>
@@ -156,21 +157,6 @@
                                 render: (data, type, row) => {
                                     return data;
                                 }
-                            },{
-                                data: 'OPERASIONAL',
-                                render: (data, type, row) => {
-                                    return data;
-                                }
-                            },{
-                                data: 'PRIVE',
-                                render: (data, type, row) => {
-                                    return data;
-                                }
-                            },{
-                                data: 'UMUM',
-                                render: (data, type, row) => {
-                                    return data;
-                                }
                             },
                             {
                                 data: 'user',
@@ -191,8 +177,11 @@
                                     let deleteUrl =
                                         `<button onclick="return pendapatanDelete('${data.id}','${data.uraian}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i class="fas fa-trash"></i></button>`;
                                     return `
-                            <a href="${editUrl}" class="mr-3 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                            <a href="${editUrl}" class="group mr-3 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
                             <i class="fas fa-edit"></i>
+                            <div class="absolute py-1 px-4 bg-gray-800 -mt-6 -ml-14 text-white text-xs rounded-md hidden group-hover:block">
+                                Edit
+                            </div>
                         </a>
                         ${deleteUrl}
                         `;
