@@ -10,6 +10,7 @@ class Pengeluaran extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id_pengeluaran',
         'item_pengeluaran',
         'tgl_pengeluaran',
         'id_jenis_pengeluaran',
@@ -28,6 +29,11 @@ class Pengeluaran extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user', 'id');
+    }
+
+    public function laporan()
+    {
+        return $this->hasMany(Laporan::class, 'id_pengeluaran');
     }
 
 }

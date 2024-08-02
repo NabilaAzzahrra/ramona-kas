@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jenispengeluaran;
 use App\Models\Pengeluaran;
+use App\Models\Saldo;
 use App\Models\Views;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,7 +51,9 @@ class PengeluaranController extends Controller
      */
     public function store(Request $request)
     {
+        $id_pengeluaran = date('YmdHis');
         $data = [
+            'id_pengeluaran' => $id_pengeluaran,
             'id_jenis_pengeluaran' => $request->input('klasifikasi'),
             'item_pengeluaran' => $request->input('uraian'),
             'tgl_pengeluaran' => date('Y-m-d'),
@@ -60,6 +63,16 @@ class PengeluaranController extends Controller
         ];
 
         Pengeluaran::create($data);
+
+        $datasaldo = [
+            'tgl_saldo' =>  date('Y-m-d'),
+            'id_pendapatan' => 0,
+            'id_pengeluaran' => $id_pengeluaran,
+            'debit' => $request->input('pengeluaran'),
+            'kredit' => 0,
+        ];
+        Saldo::create($datasaldo);
+
         return redirect()
             ->route('pengeluaran.index')
             ->with('message', 'Data Pengeluaran Sudah ditambahkan');

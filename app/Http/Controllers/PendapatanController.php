@@ -34,8 +34,10 @@ class PendapatanController extends Controller
      */
     public function store(Request $request)
     {
+        $id_pendapatan = date('YmdHis');
         $data = [
             'id_klasifikasi' => $request->input('klasifikasi'),
+            'id_pendapatan' => $id_pendapatan,
             'item_pendapatan' => $request->input('uraian'),
             'tgl_pendapatan' => date('Y-m-d'),
             'tagihan' => $request->input('tagihan'),
@@ -50,16 +52,20 @@ class PendapatanController extends Controller
         Pendapatan::create($data);
 
         $datasaldo = [
-            'penerimaan' => $request->input('penerimaan'),
+            'tgl_saldo' =>  date('Y-m-d'),
+            'id_pendapatan' => $id_pendapatan,
+            'id_pengeluaran' => 0,
+            'debit' => 0,
+            'kredit' => $request->input('penerimaan'),
         ];
+        Saldo::create($datasaldo);
 
-        $datas = Saldo::all();
-        // $datas->update($datasaldo);
+        // $datas = Saldo::all();
 
-        foreach ($datas as $d) {
-            $d->saldo += $request->input('penerimaan');
-            $d->save();
-        }
+        // foreach ($datas as $d) {
+        //     $d->saldo += $request->input('penerimaan');
+        //     $d->save();
+        // }
 
         return redirect()
             ->route('pendapatan.index')
@@ -107,21 +113,21 @@ class PendapatanController extends Controller
         $penerimaan_awal = $request->input('penerimaan_awal');
         $penerimaan = $request->input('penerimaan');
 
-        $datas = Saldo::all();
+        // $datas = Saldo::all();
 
-        if ($penerimaan_awal > $penerimaan) {
-            $hasil = $penerimaan_awal - $penerimaan;
-            foreach ($datas as $d) {
-                $d->saldo -= $hasil;
-                $d->save();
-            }
-        } else {
-            $hasil = $penerimaan - $penerimaan_awal;
-            foreach ($datas as $d) {
-                $d->saldo += $hasil;
-                $d->save();
-            }
-        }
+        // if ($penerimaan_awal > $penerimaan) {
+        //     $hasil = $penerimaan_awal - $penerimaan;
+        //     foreach ($datas as $d) {
+        //         $d->saldo -= $hasil;
+        //         $d->save();
+        //     }
+        // } else {
+        //     $hasil = $penerimaan - $penerimaan_awal;
+        //     foreach ($datas as $d) {
+        //         $d->saldo += $hasil;
+        //         $d->save();
+        //     }
+        // }
 
 
         $datas = Pendapatan::findOrFail($id);

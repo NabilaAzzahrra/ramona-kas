@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\JenispengeluaranController;
 use App\Http\Controllers\KlasifikasiController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PendapatanController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProfileController;
@@ -22,6 +23,7 @@ Route::resource('jenis_pengeluaran',JenispengeluaranController::class)->middlewa
 Route::resource('pendapatan',PendapatanController::class)->middleware(['auth']);
 Route::resource('saldo',SaldoController::class)->middleware(['auth']);
 Route::resource('pengeluaran',PengeluaranController::class)->middleware(['auth']);
+Route::resource('laporan',LaporanController::class)->middleware(['auth']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('saldo', function (Blueprint $table) {
             $table->id();
-            $table->integer('saldo');
+            $table->date('tgl_saldo');
+            $table->integer('id_pendapatan');
+            $table->integer('id_pengeluaran');
+            $table->integer('debit');
+            $table->integer('kredit');
             $table->timestamps();
         });
     }

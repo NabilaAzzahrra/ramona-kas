@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pengeluaran', function (Blueprint $table) {
             $table->id();
+            $table->string('id_pengeluaran');
             $table->string('item_pengeluaran');
             $table->date('tgl_pengeluaran');
             $table->integer('id_jenis_pengeluaran');
