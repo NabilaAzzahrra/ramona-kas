@@ -11,11 +11,22 @@
                 <div class="w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-xl">
                         <div class="p-3 text-gray-900 dark:text-gray-100">
-                            <div class="m-4 p-3 bg-slate-50 rounded-xl flex flex-col md:flex-row items-center md:justify-between">
+                            <div
+                                class="m-4 p-3 bg-slate-50 rounded-xl flex flex-col md:flex-row items-center md:justify-between">
                                 <div class="px-2 font-bold text-slate-800 text-lg">DATA PENGELUARAN</div>
                                 <div class="flex gap-5">
-                                    <div><a href="{{ route('pengeluaran.create') }}" class="flex items-center gap-1 bg-[#0C4B54] hover:bg-[#0c3454] text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                        Tambah</a></div>
+                                    <div><a href="{{ route('pengeluaran.create') }}"
+                                            class="flex items-center gap-1 bg-[#0C4B54] hover:bg-[#0c3454] text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold"><svg
+                                                xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-plus">
+                                                <line x1="12" y1="5" x2="12" y2="19">
+                                                </line>
+                                                <line x1="5" y1="12" x2="19" y2="12">
+                                                </line>
+                                            </svg>
+                                            Tambah</a></div>
                                 </div>
                             </div>
                             <div class="flex justify-center">
@@ -131,17 +142,20 @@
 
                         let columnData = [];
 
+                        // Kolom yang sudah ada
                         let columnConfigs = [{
                                 data: 'no',
                                 render: (data, type, row, meta) => {
                                     return `<div style="text-align:center">${meta.row + 1}.</div>`;
                                 },
-                            }, {
+                            },
+                            {
                                 data: 'id',
                                 render: (data, type, row) => {
                                     return data;
                                 }
-                            }, {
+                            },
+                            {
                                 data: 'tgl_pengeluaran',
                                 render: (data, type, row) => {
                                     return moment(data).format('DD-MM-YYYY');
@@ -152,42 +166,65 @@
                                 render: (data, type, row) => {
                                     return data;
                                 }
-                            }, {
+                            },
+                            {
                                 data: 'BAHAN',
                                 render: (data, type, row) => {
                                     return data;
                                 }
                             },
-                            {
-                                data: 'user',
-                                render: (data, type, row) => {
-                                    return data.name;
-                                }
-                            }, {
-                                data: {
-                                    no: 'no',
-                                    name: 'name'
-                                },
-                                render: (data) => {
-                                    var editUrl = "{{ route('pengeluaran.show', ':id') }}".replace(
-                                        ':id',
-                                        data.id
-                                    );
-
-                                    let deleteUrl =
-                                        `<button onclick="return pendapatanDelete('${data.id}','${data.uraian}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i class="fas fa-trash"></i></button>`;
-                                    return `
-                            <a href="${editUrl}" class="group mr-3 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
-                            <i class="fas fa-edit"></i>
-                            <div class="absolute py-1 px-4 bg-gray-800 -mt-6 -ml-14 text-white text-xs rounded-md hidden group-hover:block">
-                                Edit
-                            </div>
-                        </a>
-                        ${deleteUrl}
-                        `;
-                                }
-                            },
                         ];
+
+                        // Kolom dinamis
+                        const additionalFields = ['OPERASIONAL', 'PRIVE', 'UMUM'];
+                        additionalFields.forEach(field => {
+                            columnConfigs.push({
+                                data: field,
+                                render: (data, type, row) => {
+                                    return data;
+                                }
+                            });
+                        });
+
+                        // Menambahkan kolom 'user' sebelum 'action'
+                        columnConfigs.push({
+                            data: 'user',
+                            render: (data, type, row) => {
+                                return data.name;
+                            }
+                        });
+
+                        // Menambahkan kolom 'action'
+                        columnConfigs.push({
+                            data: {
+                                no: 'no',
+                                name: 'name'
+                            },
+                            render: (data) => {
+                                var editUrl = "{{ route('pengeluaran.show', ':id') }}".replace(
+                                    ':id', data.id);
+                                let deleteUrl =
+                                    `<button onclick="return pendapatanDelete('${data.id}','${data.uraian}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                                return `
+            <a href="${editUrl}" class="group mr-3 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                <i class="fas fa-edit"></i>
+                <div class="absolute py-1 px-4 bg-gray-800 -mt-6 -ml-14 text-white text-xs rounded-md hidden group-hover:block">
+                    Edit
+                </div>
+            </a>
+            ${deleteUrl}
+        `;
+                            }
+                        });
+
+                        // Inisialisasi DataTable dengan columnConfigs yang diperbarui
+                        $(document).ready(function() {
+                            $('#yourTableId').DataTable({
+                                columns: columnConfigs,
+                                data: yourData // ganti dengan sumber data Anda yang sebenarnya
+                            });
+                        });
+
 
                         const dataTableConfig = {
                             data: registers,
