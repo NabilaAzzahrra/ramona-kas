@@ -11,18 +11,38 @@
                 <div class="w-full md:w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-xl">
                         <div class="p-3 text-gray-900 dark:text-gray-100">
-                            <div class="m-4 p-3 bg-slate-50 rounded-xl flex flex-col md:flex-row items-center md:justify-between">
+                            <div
+                                class="m-4 p-3 bg-slate-50 rounded-xl flex flex-col md:flex-row items-center md:justify-between">
                                 <div class="px-9 font-bold text-slate-800 text-lg">Pendapatan</div>
                                 <div class="grid grid-cols-2 pt-3 md:pt-0 md:flex  items-center gap-3">
                                     <div>
-                                        <a onclick="editSourceModalSaldo()" href="#" class="flex items-center gap-1 bg-[#2498aa] text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold hover:bg-[#2484aa]">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        <a onclick="editSourceModalSaldo()" href="#"
+                                            class="flex items-center gap-1 bg-[#2498aa] text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold hover:bg-[#2484aa]">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-plus">
+                                                <line x1="12" y1="5" x2="12" y2="19">
+                                                </line>
+                                                <line x1="5" y1="12" x2="19" y2="12">
+                                                </line>
+                                            </svg>
                                             Saldo Awal</a>
                                     </div>
                                     <div>
-                                        <a href="{{ route('pendapatan.create') }}" class="flex items-center gap-1 bg-[#0C4B54] hover:bg-[#0c3454] text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                        Tambah</a></div>
+                                        <a href="{{ route('pendapatan.create') }}"
+                                            class="flex items-center gap-1 bg-[#0C4B54] hover:bg-[#0c3454] text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-plus">
+                                                <line x1="12" y1="5" x2="12" y2="19">
+                                                </line>
+                                                <line x1="5" y1="12" x2="19" y2="12">
+                                                </line>
+                                            </svg>
+                                            Tambah</a>
+                                    </div>
                                     <button onclick="filter(this)" data-modal-target="sourceModal"
                                         class="flex items-center gap-3 bg-sky-400 hover:bg-sky-500 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">
                                         <i class="fa-solid fa-filter"></i>
@@ -102,7 +122,7 @@
                 <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                     <button id="formSourceButton" onclick="changeFilterDataRegisterProgram()"
                         class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
-                    <button type="button" data-modal-target="sourceModal"
+                    <button type="button" data-modal-target="sourceModal" onclick="sourceModalClose(this)"
                         class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
                 </div>
             </div>
@@ -117,7 +137,7 @@
                     <h3 class="font-bold text-slate-800 text-xl" id="title_source_saldo">
                         Input Saldo Awal
                     </h3>
-                    <button type="button" onclick="sourceModalClose()" data-modal-sasaran="sourceModal"
+                    <button type="button" onclick="sourceModalCloseSaldo(this)" data-modal-target="sourceModalSaldo"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
@@ -134,15 +154,17 @@
                         </div>
                     </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
-                        <button type="submit" id="formSourceButton" onclick="changeFilterDataRegisterProgram()"
+                        <button type="submit" id="formSourceButtonSaldo" onclick="changeFilterDataRegisterProgram()"
                             class="bg-[#0C4B54] hover:bg-[#0c3454] flex items-center gap-3 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">Simpan</button>
-                        <button type="button" onclick="sourceModalClose()"
+                        <button type="button" onclick="sourceModalCloseSaldo(this)" data-modal-target="sourceModalSaldo"
                             class="bg-red-600 hover:bg-red-700 flex items-center gap-3 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">Batal</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+
 
 
     @push('scripts')
@@ -187,47 +209,48 @@
             }
 
             // modal close edit start
-        document.addEventListener("DOMContentLoaded", function () {
-            const sourceModal = document.getElementById('sourceModalSaldo');
-            const backgroundOverlay = sourceModal.querySelector('.bg-black.opacity-50');
-            const closeModalButtons = sourceModal.querySelectorAll('[data-modal-hide], [data-modal-target="sourceModal"]');
+            document.addEventListener("DOMContentLoaded", function() {
+                const sourceModal = document.getElementById('sourceModalSaldo');
+                const backgroundOverlay = sourceModal.querySelector('.bg-black.opacity-50');
+                const closeModalButtons = sourceModal.querySelectorAll(
+                    '[data-modal-hide], [data-modal-target="sourceModal"]');
 
-            console.log("Modal script loaded");
+                console.log("Modal script loaded");
 
-            function closeModal() {
-                console.log("Closing modal");
-                sourceModal.classList.add('hidden');
-            }
+                function closeModal() {
+                    console.log("Closing modal");
+                    sourceModal.classList.add('hidden');
+                }
 
-            // Close modal on clicking the background
-            if (backgroundOverlay) {
-                backgroundOverlay.addEventListener('click', function () {
-                    console.log("Background overlay clicked");
-                    closeModal();
+                // Close modal on clicking the background
+                if (backgroundOverlay) {
+                    backgroundOverlay.addEventListener('click', function() {
+                        console.log("Background overlay clicked");
+                        closeModal();
+                    });
+                } else {
+                    console.error("Background overlay not found");
+                }
+
+                // Close modal on clicking close buttons
+                closeModalButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        console.log("Close button clicked");
+                        closeModal();
+                    });
                 });
-            } else {
-                console.error("Background overlay not found");
-            }
 
-            // Close modal on clicking close buttons
-            closeModalButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    console.log("Close button clicked");
+                // Functions to handle the cancel and X button
+                window.changeSourceModal = function() {
                     closeModal();
-                });
+                };
+
+                window.sourceModalClose = function() {
+                    closeModal();
+                };
             });
 
-            // Functions to handle the cancel and X button
-            window.changeSourceModal = function () {
-                closeModal();
-            };
-
-            window.sourceModalClose = function () {
-                closeModal();
-            };
-        });
-
-// modal close edit end
+            // modal close edit end
 
             const getDataTableRegisterProgram = async () => {
                 return new Promise(async (resolve, reject) => {
@@ -370,12 +393,6 @@
         const sourceModalClose = (button) => {
             const modalTarget = button.dataset.modalTarget;
             let status = document.getElementById(modalTarget);
-            status.classList.toggle('hidden');
-        }
-
-        const sourceModalClose = (button) => {
-            const modalTarget = button.dataset.modalsasaran;
-            let status = document.getElementById(modalsasaran);
             status.classList.toggle('hidden');
         }
     </script>
@@ -570,6 +587,17 @@
             // formElement.appendChild(methodInput);
 
             formModal.classList.toggle('hidden');
+        }
+
+        const sourceModalCloseSaldo = (button) => {
+            const modalTarget = button.dataset.modalTarget;
+            console.log(`Modal target: ${modalTarget}`); // Log the modal target
+            const modal = document.getElementById(modalTarget);
+            if (modal) {
+                modal.classList.toggle('hidden');
+            } else {
+                console.error(`Modal with ID ${modalTarget} not found`);
+            }
         }
     </script>
 </x-app-layout>

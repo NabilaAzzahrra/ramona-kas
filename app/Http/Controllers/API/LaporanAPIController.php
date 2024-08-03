@@ -20,7 +20,7 @@ class LaporanAPIController extends Controller
         $laporan->whereBetween('tgl_transaksi', [$dateStart, $dateEnd]);
     }
 
-    $laporan = $laporan->with([])->get();
+    $laporan = $laporan->with(['luar', 'dapat', 'dapat.klasifikasi', 'luar.jenis_pengeluaran', 'dapat.user', 'luar.user'])->get();
 
     return response()->json(['laporan' => $laporan]);
    }

@@ -58,7 +58,7 @@
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
-                <form id="filterForm" action="{{ route('laporan.create') }}" method="GET">
+                <form id="filterForm" action="{{ route('laporan.create') }}" method="GET" target="_blank">
                     <div class="flex flex-col p-4 space-y-6">
                         <div>
                             <label for="from_date" class="block mb-2 text-sm font-medium text-gray-900">Dari Tanggal</label>

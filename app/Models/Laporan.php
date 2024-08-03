@@ -18,4 +18,14 @@ class Laporan extends Model
     ];
 
     protected $table = 'view_transaksi';
+
+    public function luar()
+    {
+        return $this->belongsTo(Pengeluaran::class, 'id_transaksi', 'id_pengeluaran');
+    }
+
+    public function dapat()
+    {
+        return $this->belongsTo(Pendapatan::class, 'id_transaksi', 'id_pendapatan');
+    }
 }
