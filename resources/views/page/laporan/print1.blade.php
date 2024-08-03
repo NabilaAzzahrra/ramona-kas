@@ -18,7 +18,6 @@
             @page {
                 size: landscape;
             }
-            /* Tambahkan gaya cetak lainnya di sini */
         }
     </style>
     <style>
