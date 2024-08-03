@@ -1,33 +1,43 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+        <h2 class="px-3 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Laporan') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-6">
+        <div class="max-w-8/12 mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center">
-                <div class="w-full md:w-9/12 p-3">
-                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="p-6 bg-red-500 rounded-xl flex items-center justify-between">
-                                <div>DATA TRANSAKSI</div>
-                                <div class="flex gap-5">
-                                    <a href="#">PRINT</a>
+                <div class="w-full p-3">
+                    <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-xl">
+                        <div class="p-3 text-gray-900 dark:text-gray-100">
+                            <div class="m-4 p-3 bg-slate-50 rounded-xl flex flex-col md:flex-row shadow-md items-center md:justify-between">
+                                <div class="px-9 font-bold text-slate-800 text-lg">DATA TRANSAKSI</div>
+                                <div class="grid grid-cols-2 pt-3 md:pt-0 md:flex items-center gap-3">
+                                    <a href="#" class="flex items-center gap-2 bg-indigo-800 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold hover:bg-indigo-700">
+                                        <i class="fa-solid fa-print"></i>
+                                        PRINT</a>
+
                                     <button onclick="filter(this)" data-modal-target="sourceModal"
-                                        class="bg-sky-400 py-2 px-4 rounded-lg text-white hover:bg-sky-500"><i
-                                            class="fa-solid fa-filter"></i></button>
+                                        class="flex items-center gap-3 bg-sky-400 hover:bg-sky-500 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">
+                                        <i class="fa-solid fa-filter"></i>
+                                        Filter
+                                    </button>
                                     <button onclick="exportExcel()"
-                                        class="bg-amber-400 py-2 px-4 rounded-lg text-white hover:bg-amber-500"><i
-                                            class="fa-solid fa-file-excel"></i></button>
+                                        class="bg-emerald-600 hover:bg-emerald-700 flex items-center gap-3 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">
+                                        <i class="fa-solid fa-file-excel"></i>
+                                        Export to Excel
+                                    </button>
                                     <button
-                                        class="bg-white border-2 border-black py-2 px-4 rounded-lg text-black hover:text-white hover:bg-black hover:border-2 hover:border-black"
-                                        onclick="exportPDF()"><i class="fa-solid fa-file-pdf"></i></button>
+                                        class="bg-red-600 hover:bg-red-700 flex items-center gap-3 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold"
+                                        onclick="exportPDF()">
+                                        <i class="fa-solid fa-file-pdf"></i>
+                                        Export to PDF
+                                    </button>
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <div class="p-12" style="width:100%">
+                                <div class="overflow-x-scroll p-12" style="width:100%">
                                     <table class="table table-bordered" id="laporan-datatable">
                                         <thead>
                                             <tr>

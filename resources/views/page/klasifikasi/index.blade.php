@@ -7,6 +7,9 @@
 
     <div class="py-6">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
+            <div class="flex justify-center">
+                <div class="success-message hidden inline-flex mx-6 bg-emerald-100 border border-emerald-600 rounded-md px-4 py-2 shadow-md font-semibold text-emerald-700" id="successMessage">Data berhasil ditambahkan!</div>
+            </div>
             <div class="flex flex-col md:flex-row justify-center">
                 <div class="w-full md:w-3/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -14,7 +17,7 @@
                             <div class="p-3 font-bold text-xl text-slate-800">
                                 Form Input Klasifikasi
                             </div>
-                            <form action="{{ route('klasifikasi.store') }}" method="post">
+                            <form id="dataForm" action="{{ route('klasifikasi.store') }}" method="post">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="mb-5">
@@ -34,8 +37,10 @@
                 <div class="w-full md:w-9/12 p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <div class="px-10 py-4 font-bold text-xl text-slate-800">
-                                Data Klasifikasi
+                            <div class="flex justify-between items-center">
+                                <div class="px-10 py-4 font-bold text-xl text-slate-800">
+                                    Data Klasifikasi
+                                </div>
                             </div>
                             <hr class="mx-8">
                             <div class="flex justify-center">
@@ -142,6 +147,31 @@
         });
 
 
+        // validasi data sukses tambah start
+        document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('dataForm');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // Assuming the form submission is successful
+            try {
+                let response = await axios.post(form.action, new FormData(form));
+                if (response.status === 200) {
+                    successMessage.classList.remove('hidden');
+                    setTimeout(() => {
+                        successMessage.classList.add('hidden');
+                    }, 5000);
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+            }table.ajax.reload();
+        });
+    });
+        // validasi data sukses tambah end
+
+        
         // modal close edit start
         document.addEventListener("DOMContentLoaded", function () {
             const sourceModal = document.getElementById('sourceModal');
@@ -183,7 +213,7 @@
             };
         });
 
-// modal close edit end
+        // modal close edit end
 
         const editSourceModal = (button) => {
             const formModal = document.getElementById('formSourceModal');
@@ -235,5 +265,7 @@
                     });
             }
         }
+
+
     </script>
 </x-app-layout>
