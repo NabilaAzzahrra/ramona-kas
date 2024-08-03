@@ -8,11 +8,10 @@
     <div class="py-6">
         <div class="max-w-8/12 mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center">
-                <div class="w-full md:w-full p-3">
+                <div class="w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-xl">
                         <div class="p-3 text-gray-900 dark:text-gray-100">
-                            <div
-                                class="m-4 p-3 bg-slate-50 rounded-xl flex flex-col md:flex-row items-center md:justify-between">
+                            <div class="m-4 p-3 bg-slate-50 rounded-xl flex flex-col md:flex-row items-center md:justify-between">
                                 <div class="px-9 font-bold text-slate-800 text-lg">Pendapatan</div>
                                 <div class="grid grid-cols-2 pt-3 md:pt-0 md:flex  items-center gap-3">
                                     <div>
