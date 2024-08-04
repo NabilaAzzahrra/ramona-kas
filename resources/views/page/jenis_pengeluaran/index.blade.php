@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="px-6 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Jenis Pengeluaran') }}
+            {{ __('Klasifikasi Pengeluaran') }}
         </h2>
     </x-slot>
 
@@ -12,14 +12,14 @@
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="p-3 font-bold text-xl text-slate-800">
-                                Input Jenis Pengeluaran
+                                Input Klasifikasi Pengeluaran
                             </div>
                             <form action="{{ route('jenis_pengeluaran.store') }}" method="post">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="mb-5">
                                         <label for="jenis_pengeluaran"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Pengeluaran</label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Klasifikasi Pengeluaran</label>
                                         <input type="text" id="jenis_pengeluaran" name="jenis_pengeluaran"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#0C4B54] focus:border-blue-950 block w-full p-2.5"
                                             placeholder="Masukan Nama Jenis Pengeluaran disini ..." required />
@@ -35,7 +35,7 @@
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-xl">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="px-10 py-4 font-bold text-xl text-slate-800">
-                                Data Jenis Pengeluaran
+                                Data Klasifikasi Pengeluaran
                             </div>
                             <div class="flex justify-center overflow-hidden">
                                 <div class="py-10 md:p-12" style="width:100%">
@@ -43,7 +43,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="w-7">No.</th>
-                                                <th>Jenis Pengeluaran</th>
+                                                <th>Klasifikasi Pengeluaran</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>

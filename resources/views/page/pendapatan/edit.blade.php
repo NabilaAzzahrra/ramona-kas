@@ -20,6 +20,7 @@
                                 @method('PATCH')
                                 <div class="p-4 rounded-xl">
                                     <div class="flex gap-5">
+                                        <input type="hidden" name="id_pendapatan" value="{{$pendapatan->id_pendapatan}}">
                                         <div class="mb-5 w-full">
                                             <label for="klasifikasi"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Klasifikasi

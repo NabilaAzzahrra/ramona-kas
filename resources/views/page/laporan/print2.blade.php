@@ -14,12 +14,6 @@
         td {
             border: 1px solid black;
         }
-
-        @media print {
-            @page {
-                size: landscape;
-            }
-        }
     </style>
     <style>
         .page-break {
@@ -315,7 +309,7 @@
 
     {{-- PENGELUARAN --}}
 
-    <div class="">
+    <div class="mt-10">
         <div class="font-bold text-center">REKAPITULASI PENGELUARAN</div>
         <div class="font-bold text-center">
             @if ($start_date == $end_date)

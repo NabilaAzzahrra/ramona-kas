@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="px-6 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Klasifikasi') }}
+            {{ __('Klasifikasi Pendapatan') }}
         </h2>
     </x-slot>
 
@@ -15,7 +15,7 @@
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="p-3 font-bold text-xl text-slate-800">
-                                Form Input Klasifikasi
+                                Form Input Klasifikasi Pendapatan
                             </div>
                             <form id="dataForm" action="{{ route('klasifikasi.store') }}" method="post">
                                 @csrf
@@ -39,7 +39,7 @@
                         <div class="p-6 text-gray-900 dark:text-gray-100">
                             <div class="flex justify-between items-center">
                                 <div class="px-10 py-4 font-bold text-xl text-slate-800">
-                                    Data Klasifikasi
+                                    Data Klasifikasi Pendapatan
                                 </div>
                             </div>
                             <hr class="mx-8">
@@ -49,7 +49,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="w-7">No.</th>
-                                                <th>Klasifikasi</th>
+                                                <th>Klasifikasi Pendapatan</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -171,7 +171,7 @@
     });
         // validasi data sukses tambah end
 
-        
+
         // modal close edit start
         document.addEventListener("DOMContentLoaded", function () {
             const sourceModal = document.getElementById('sourceModal');

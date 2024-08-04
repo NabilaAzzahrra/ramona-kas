@@ -39,6 +39,16 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
+         <!-- Role -->
+         <div class="mt-4" hidden>
+            <x-input-label for="password_confirmation" :value="__('Role')" />
+
+            <x-text-input id="role" class="block mt-1 w-full" type="text"
+                name="role" value="U" />
+
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        </div>
+
         <div class=" mt-4">
             <x-primary-button class="w-full rounded-xl shadow-md px-5 py-2.5 focus:outline-none">
                 {{ __('Register') }}

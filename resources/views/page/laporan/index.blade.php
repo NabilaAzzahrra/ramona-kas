@@ -11,28 +11,25 @@
                 <div class="w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-xl">
                         <div class="p-3 text-gray-900 dark:text-gray-100">
-                            <div class="m-4 p-3 bg-slate-50 rounded-xl flex flex-col md:flex-row shadow-md items-center md:justify-between">
+                            <div
+                                class="m-4 p-3 bg-slate-50 rounded-xl flex flex-col md:flex-row shadow-md items-center md:justify-between">
                                 <div class="px-9 font-bold text-slate-800 text-lg">DATA TRANSAKSI</div>
                                 <div class="grid grid-cols-2 pt-3 md:pt-0 md:flex items-center gap-3">
-                                    <a href="#" class="flex items-center gap-2 bg-indigo-800 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold hover:bg-indigo-700">
-                                        <i class="fa-solid fa-print"></i>
-                                        PRINT</a>
-
-                                    <button onclick="filter(this)" data-modal-target="sourceModal"
+                                    {{-- <button onclick="filter(this)" data-modal-target="sourceModal"
                                         class="flex items-center gap-3 bg-sky-400 hover:bg-sky-500 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">
                                         <i class="fa-solid fa-filter"></i>
                                         Filter
+                                    </button> --}}
+
+                                    <button onclick="filter(this, 'landscape')" data-modal-target="sourceModal"
+                                        class="flex items-center gap-2 bg-indigo-800 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold hover:bg-indigo-700">
+                                        <i class="fa-solid fa-print"></i>
+                                        Landscape
                                     </button>
-                                    <button onclick="exportExcel()"
+                                    <button onclick="filter(this, 'portrait')" data-modal-target="sourceModal"
                                         class="bg-emerald-600 hover:bg-emerald-700 flex items-center gap-3 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">
-                                        <i class="fa-solid fa-file-excel"></i>
-                                        Export to Excel
-                                    </button>
-                                    <button
-                                        class="bg-red-600 hover:bg-red-700 flex items-center gap-3 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold"
-                                        onclick="exportPDF()">
-                                        <i class="fa-solid fa-file-pdf"></i>
-                                        Export to PDF
+                                        <i class="fa-solid fa-print"></i>
+                                        Potrait
                                     </button>
                                 </div>
                             </div>
@@ -62,27 +59,31 @@
         <div class="fixed inset-0 flex items-center justify-center">
             <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
-                    <h3 class="text-xl font-semibold text-gray-900" id="title_source">Filter Tanggal Transaksi</h3>
+                    <h3 class="text-xl font-semibold text-gray-900" id="title_source">Print Tanggal Transaksi</h3>
                     <button type="button" onclick="sourceModalClose(this)" data-modal-target="sourceModal"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
                 <form id="filterForm" action="{{ route('laporan.create') }}" method="GET" target="_blank">
+                    <input type="hidden" name="orientation" value="">
                     <div class="flex flex-col p-4 space-y-6">
                         <div>
-                            <label for="from_date" class="block mb-2 text-sm font-medium text-gray-900">Dari Tanggal</label>
+                            <label for="from_date" class="block mb-2 text-sm font-medium text-gray-900">Dari
+                                Tanggal</label>
                             <input type="date" id="from_date" name="start_date"
                                 class="px-3 py-2 border shadow rounded w-full block text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
                         </div>
                         <div>
-                            <label for="to_date" class="block mb-2 text-sm font-medium text-gray-900">Sampai Tanggal</label>
+                            <label for="to_date" class="block mb-2 text-sm font-medium text-gray-900">Sampai
+                                Tanggal</label>
                             <input type="date" id="to_date" name="end_date"
                                 class="px-3 py-2 border shadow rounded w-full block text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
                         </div>
                     </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
-                        <button type="submit" class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
+                        <button type="submit"
+                            class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
                         <button type="button" data-modal-target="sourceModal" onclick="sourceModalClose(this)"
                             class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
                     </div>
@@ -216,33 +217,49 @@
             promiseDataRegisterProgram();
         </script>
     @endpush
-    {{-- <script>
-        const filter = (button) => {
-            const formModal = document.getElementById('formSourceModal');
+
+    <script>
+        // const filter = (button, orientation) => {
+        //     const modalTarget = button.dataset.modalTarget;
+        //     let status = document.getElementById(modalTarget);
+        //     status.classList.remove('hidden');
+        // }
+
+        // const sourceModalClose = (button) => {
+        //     const modalTarget = button.dataset.modalTarget;
+        //     let status = document.getElementById(modalTarget);
+        //     status.classList.add('hidden');
+        // }
+
+        const filter = (button, orientation) => {
             const modalTarget = button.dataset.modalTarget;
-
-            document.getElementById('title_source').innerText = `Filter Tanggal`;
-
             let modal = document.getElementById(modalTarget);
+
+            // Set the orientation value in the hidden input
+            const orientationInput = modal.querySelector('input[name="orientation"]');
+            orientationInput.value = orientation;
+
+            // Show the modal
             modal.classList.remove('hidden');
         }
 
         const sourceModalClose = (button) => {
             const modalTarget = button.dataset.modalTarget;
-            let status = document.getElementById(modalTarget);
-            status.classList.toggle('hidden');
-        }
-    </script> --}}
+            let modal = document.getElementById(modalTarget);
 
+            // Hide the modal
+            modal.classList.add('hidden');
+        }
+    </script>
 
     <script>
-        const filter = (button) => {
+        const filter_p = (button) => {
             const modalTarget = button.dataset.modalTarget;
             let status = document.getElementById(modalTarget);
             status.classList.remove('hidden');
         }
 
-        const sourceModalClose = (button) => {
+        const sourceModalCloseP = (button) => {
             const modalTarget = button.dataset.modalTarget;
             let status = document.getElementById(modalTarget);
             status.classList.add('hidden');
@@ -268,130 +285,5 @@
                     });
             }
         }
-    </script>
-    <script>
-        const exportExcel = async () => {
-            console.log(dataLaporan)
-            try {
-                const workbook = new ExcelJS.Workbook();
-                const worksheet = workbook.addWorksheet('Data');
-                let header = ['No', 'item', 'tgl_transaksi', 'Pendapatan', 'Pengeluaran'];
-                let dataExcel = [
-                    header,
-                ];
-                dataLaporan.forEach((data, index) => {
-                    let studentBucket = [];
-                    const date = new Date(data.created_at);
-                    const day = date.getDate().toString().padStart(2,
-                        '0');
-                    const month = (date.getMonth() + 1).toString().padStart(2,
-                        '0');
-                    const year = date.getFullYear();
-                    const formattedDate = `${day}/${month}/${year}`;
-
-                    function formatDate(dateString) {
-                        const date = new Date(dateString);
-                        const day = String(date.getDate()).padStart(2, '0');
-                        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-                        const year = date.getFullYear();
-                        return `${day}/${month}/${year}`;
-                    }
-
-                    studentBucket.push(
-                        `${index + 1}`,
-                        `${data.item}`,
-                        `${formatDate(data.tgl_transaksi)}`,
-                        `${data.pendapatan}`,
-                        `${data.pengeluaran}`,
-                    );
-                    dataExcel.push(studentBucket);
-                });
-
-                worksheet.addRows(dataExcel);
-
-                const blob = await workbook.xlsx.writeBuffer();
-                const blobData = new Blob([blob], {
-                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                });
-
-                const link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blobData);
-                link.download = `Pendapatan.xlsx`;
-
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        };
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-    <script>
-        const exportPDF = async () => {
-            console.log(dataLaporan);
-            try {
-                const {
-                    jsPDF
-                } = window.jspdf;
-
-                const doc = new jsPDF('landscape', 'mm', 'a4');
-
-                let header = ['No', 'item', 'tgl_transaksi', 'Pendapatan', 'Pengeluaran'];
-
-                let startX = 10;
-                let startY = 10;
-                let lineHeight = 10;
-
-                doc.setFontSize(10);
-
-                let columnWidths = [10, 18, 40, 35, 20];
-
-                header.forEach((title, index) => {
-                    let headerX = startX + columnWidths.slice(0, index).reduce((a, b) => a + b, 0);
-                    doc.text(title, headerX, startY);
-                });
-
-                let currentY = startY + lineHeight;
-                dataLaporan.forEach((data, index) => {
-                    function formatDate(dateString) {
-                        const date = new Date(dateString);
-                        const day = String(date.getDate()).padStart(2, '0');
-                        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-                        const year = date.getFullYear();
-                        return `${day}/${month}/${year}`;
-                    }
-
-                    const row = [
-                        `${index + 1}`,
-                        `${data.item}`,
-                        `${formatDate(data.tgl_transaksi)}`,
-                        `${data.pendapatan}`,
-                        `${data.pengeluaran}`,
-                    ];
-
-                    let maxHeight = 0;
-
-                    row.forEach((cell, cellIndex) => {
-                        let text = cell;
-                        let cellX = startX + columnWidths.slice(0, cellIndex).reduce((a, b) => a +
-                            b, 0);
-                        let cellY = currentY;
-
-                        let splitText = doc.splitTextToSize(text, columnWidths[cellIndex]);
-                        doc.text(splitText, cellX, cellY);
-                        maxHeight = Math.max(maxHeight, splitText.length * lineHeight);
-                    });
-
-                    currentY += Math.max(lineHeight, maxHeight);
-                });
-
-                doc.save('Transaksi.pdf');
-
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        };
     </script>
 </x-app-layout>

@@ -20,145 +20,160 @@
                 </div>
             </div>
         </div> --}}
-    
-        <div class="pt-5">
-            <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 justify-center">
-                    <div>
-                        <div class="bg-white p-3 rounded-xl shadow-md">
-                            <div class="flex flex-row items-center gap-3">
-                                <div class="p-1 rounded-full border">
-                                    <i class="fa-solid fa-file-lines"></i>
-                                </div>
-                                <div class="font-semibold text-slate-700 text-lg px-1">Klasifikasi</div>
+
+    <div class="pt-5">
+        <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 justify-center">
+                <div>
+                    <div class="bg-white p-3 rounded-xl shadow-md">
+                        <div class="flex flex-row items-center gap-3">
+                            <div class="p-1 rounded-full border">
+                                <i class="fa-solid fa-file-lines"></i>
                             </div>
-                            <div class="font-bold text-slate-900 text-4xl py-3">
-                                22
-                            </div>
+                            <div class="font-semibold text-slate-700 text-lg px-1">Klasifikasi Pendapatan</div>
                         </div>
-                        <div class="flex justify-between px-6 py-2 -mt-2 rounded-b-xl shadow-md bg-[#0C4B54]">
-                            <p class="text-sm text-emerald-400 font-semibold">12%</p>
-                            <p class="text-sm text-slate-200">Klasifikasi Per Hari Ini</p>
+                        <div class="font-bold text-slate-900 text-4xl py-3">
+                            @php
+                                $countKlasifikasi = count($klasifikasi);
+                            @endphp
+                            {{ $countKlasifikasi }}
                         </div>
                     </div>
-                    
-                    <div>
-                        <div class="bg-white p-3 rounded-xl shadow-md">
-                            <div class="flex flex-row items-center gap-3">
-                                <div class="p-1 rounded-full border">
-                                    <i class="fa-solid fa-tarp"></i>
-                                </div>
-                                <div class="font-semibold text-slate-700 text-lg px-1">Jenis Pengeluaran</div>
-                            </div>
-                            <div class="font-bold text-slate-900 text-4xl py-3">
-                                30
-                            </div>
-                        </div>
-                        <div class="flex justify-between px-6 py-2 -mt-2 rounded-b-xl shadow-md bg-[#0C4B54]">
-                            <p class="text-sm text-emerald-400 font-semibold">15%</p>
-                            <p class="text-sm text-slate-200">Jenis Pengeluaran Per Hari Ini</p>
-                        </div>
-                    </div>
-    
-                    <div>
-                        <div class="bg-white p-3 rounded-xl shadow-md">
-                            <div class="flex flex-row items-center gap-3">
-                                <div class="p-1 rounded-full border">
-                                    <i class="fa-solid fa-money-check-dollar"></i>
-                                </div>
-                                <div class="font-semibold text-slate-700 text-lg px-1">Pendapatan</div>
-                            </div>
-                            <div class="font-bold text-slate-900 text-4xl py-3">
-                                Rp. 15.000.000
-                            </div>
-                        </div>
-                        <div class="flex justify-between px-6 py-2 -mt-2 rounded-b-xl shadow-md bg-[#0C4B54]">
-                            <p class="text-sm text-emerald-400 font-semibold">30%</p>
-                            <p class="text-sm text-slate-200">Pendapatan Per Hari Ini</p>
-                        </div>
-                    </div>
-    
-                    <div>
-                        <div class="bg-white p-3 rounded-xl shadow-md">
-                            <div class="flex flex-row items-center gap-3">
-                                <div class="p-1 rounded-full border">
-                                    <i class="fa-solid fa-coins"></i>
-                                </div>
-                                <div class="font-semibold text-slate-700 text-lg px-1">Pengeluaran</div>
-                            </div>
-                            <div class="font-bold text-slate-900 text-4xl py-3">
-                                Rp. 1.250.000
-                            </div>
-                        </div>
-                        <div class="flex justify-between px-6 py-2 -mt-2 rounded-b-xl shadow-md bg-[#0C4B54]">
-                            <p class="text-sm text-red-400 font-semibold">10%</p>
-                            <p class="text-sm text-slate-200">Pengeluaran Per Hari Ini</p>
-                        </div>
+                    <div class="flex justify-between px-6 py-2 -mt-2 rounded-b-xl shadow-md bg-[#0C4B54]">
+                        <p class="text-sm text-emerald-400 font-semibold"></p>
+                        <p class="text-sm text-slate-200">Klasifikasi Pendapatan</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    
-        
-        <div class="max-w-8xl px-6 lg:px-8 py-5 lg:py-5 mt-5 mb-2 md:mx-8 rounded-xl bg-white">
-            <div class="flex flex-col md:flex-row gap-5">
-                <div class="md:w-1/2 border rounded-2xl">
-                    <h1 class="font-bold text-slate-100 text-md md:text-xl rounded-t-xl bg-[#0C4B54] p-3 text-center">Pendapatan</h1>
-                    <canvas id="Chartmasuk"></canvas>
+
+                <div>
+                    <div class="bg-white p-3 rounded-xl shadow-md">
+                        <div class="flex flex-row items-center gap-3">
+                            <div class="p-1 rounded-full border">
+                                <i class="fa-solid fa-tarp"></i>
+                            </div>
+                            <div class="font-semibold text-slate-700 text-lg px-1">Klasifikasi Pengeluaran</div>
+                        </div>
+                        <div class="font-bold text-slate-900 text-4xl py-3">
+                            @php
+                                $countKlasifikasiPengeluaran = count($jenis_pengeluaran);
+                            @endphp
+                            {{ $countKlasifikasiPengeluaran }}
+                        </div>
+                    </div>
+                    <div class="flex justify-between px-6 py-2 -mt-2 rounded-b-xl shadow-md bg-[#0C4B54]">
+                        <p class="text-sm text-emerald-400 font-semibold"></p>
+                        <p class="text-sm text-slate-200">Klasifikasi Pengeluaran</p>
+                    </div>
                 </div>
-                <div class="md:w-1/2 border rounded-2xl">
-                    <h1 class="font-bold text-slate-100 text-md md:text-xl rounded-t-xl bg-[#0C4B54] p-3 text-center">Pengeluaran</h1>
-                    <canvas id="Chartkeluar"></canvas>
+
+                <div>
+                    <div class="bg-white p-3 rounded-xl shadow-md">
+                        <div class="flex flex-row items-center gap-3">
+                            <div class="p-1 rounded-full border">
+                                <i class="fa-solid fa-money-check-dollar"></i>
+                            </div>
+                            <div class="font-semibold text-slate-700 text-lg px-1">Pendapatan</div>
+                        </div>
+                        <div class="font-bold text-slate-900 text-4xl py-3">
+                            Rp. {{ number_format($sumPendapatan, 0, ',', '.') }}
+                        </div>
+                    </div>
+                    <div class="flex justify-between px-6 py-2 -mt-2 rounded-b-xl shadow-md bg-[#0C4B54]">
+                        <p class="text-sm text-emerald-400 font-semibold"></p>
+                        <p class="text-sm text-slate-200">Pendapatan Per Hari Ini</p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="bg-white p-3 rounded-xl shadow-md">
+                        <div class="flex flex-row items-center gap-3">
+                            <div class="p-1 rounded-full border">
+                                <i class="fa-solid fa-coins"></i>
+                            </div>
+                            <div class="font-semibold text-slate-700 text-lg px-1">Pengeluaran</div>
+                        </div>
+                        <div class="font-bold text-slate-900 text-4xl py-3">
+                            Rp. {{ number_format($sumPengeluaran, 0, ',', '.') }}
+                        </div>
+                    </div>
+                    <div class="flex justify-between px-6 py-2 -mt-2 rounded-b-xl shadow-md bg-[#0C4B54]">
+                        <p class="text-sm text-red-400 font-semibold"></p>
+                        <p class="text-sm text-slate-200">Pengeluaran Per Hari Ini</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+
+    <div class="max-w-8xl px-6 lg:px-8 py-5 lg:py-5 mt-5 mb-2 md:mx-8 rounded-xl bg-white">
+        <div class="flex flex-col md:flex-row gap-5">
+            <div class="md:w-1/2 border rounded-2xl">
+                <h1 class="font-bold text-slate-100 text-md md:text-xl rounded-t-xl bg-[#0C4B54] p-3 text-center">
+                    Pendapatan</h1>
+                <canvas id="Chartmasuk"></canvas>
+            </div>
+            <div class="md:w-1/2 border rounded-2xl">
+                <h1 class="font-bold text-slate-100 text-md md:text-xl rounded-t-xl bg-[#0C4B54] p-3 text-center">
+                    Pengeluaran</h1>
+                <canvas id="Chartkeluar"></canvas>
+            </div>
+        </div>
+    </div>
+    </div>
+
     <script src="{{ asset('js/chart.umd.js') }}"></script>
 
-        <script>
-            const ctx = document.getElementById('Chartmasuk');
-          
-            new Chart(ctx, {
-              type: 'line',
-              data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                  label: '# of Votes',
-                  data: [12, 19, 3, 5, 2, 3],
-                  borderWidth: 1
-                }]
-              },
-              options: {
-                scales: {
-                  y: {
-                    beginAtZero: true
-                  }
-                }
-              }
-            });
+    <script>
+        const labels = {!! $labels !!};
+        const data = {!! $data !!};
 
-            const ctx2 = document.getElementById('Chartkeluar');
-          
-            new Chart(ctx2, {
-              type: 'line',
-              data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        const ctx = document.getElementById('Chartmasuk').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
                 datasets: [{
-                  label: '# of Votes',
-                  data: [12, 19, 3, 5, 2, 3],
-                  borderWidth: 1
+                    label: 'Pendapatan',
+                    data: data,
+                    borderWidth: 1,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 }]
-              },
-              options: {
+            },
+            options: {
                 scales: {
-                  y: {
-                    beginAtZero: true
-                  }
+                    y: {
+                        beginAtZero: true
+                    }
                 }
-              }
-            });
+            }
+        });
 
-            
-        </script>
+        const labels_pengeluaran = {!! $labels_pengeluaran !!};
+        const data_pengeluaran = {!! $data_pengeluaran !!};
+
+        const ctx2 = document.getElementById('Chartkeluar');
+
+        new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: labels_pengeluaran,
+                datasets: [{
+                    label: 'Pengeluaran',
+                    data: data_pengeluaran,
+                    borderWidth: 1,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </x-app-layout>

@@ -11,7 +11,8 @@
                 <div class="w-full p-3">
                     <div class="bg-white w-full dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-xl">
                         <div class="p-3 text-gray-900 dark:text-gray-100">
-                            <div class="m-4 p-3 bg-slate-50 rounded-xl flex flex-col md:flex-row items-center md:justify-between">
+                            <div
+                                class="m-4 p-3 bg-slate-50 rounded-xl flex flex-col md:flex-row items-center md:justify-between">
                                 <div class="px-9 font-bold text-slate-800 text-lg">Pendapatan</div>
                                 <div class="grid grid-cols-2 pt-3 md:pt-0 md:flex  items-center gap-3">
                                     <div>
@@ -60,7 +61,10 @@
                                         <i class="fa-solid fa-file-pdf"></i>
                                         Export to PDF
                                     </button>
+
                                 </div>
+                                <input type="hidden" id="userRole"
+                                    value="{{ Auth::check() && Auth::user()->role === 'S' ? 'S' : 'U' }}">
                             </div>
                             <div class="flex justify-center">
                                 <div class="overflow-x-scroll p-12" style="width:100%">
@@ -68,7 +72,6 @@
                                         <thead>
                                             <tr>
                                                 <th class="w-7">No.</th>
-                                                <th>klasifikasi</th>
                                                 <th>Uraian</th>
                                                 <th>Tanggal Pendapatan</th>
                                                 <th>Tagihan</th>
@@ -76,7 +79,10 @@
                                                 <th>Penerimaan</th>
                                                 <th>Kekurangan Bayar</th>
                                                 <th>Kelebihan Bayar</th>
-                                                <th>Action</th>
+                                                <th>Keterangan</th>
+                                                @if (Auth::check() && Auth::user()->role === 'S')
+                                                    <th>Action</th>
+                                                @endif
                                             </tr>
                                         </thead>
                                     </table>
@@ -155,7 +161,8 @@
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                         <button type="submit" id="formSourceButtonSaldo" onclick="changeFilterDataRegisterProgram()"
                             class="bg-[#0C4B54] hover:bg-[#0c3454] flex items-center gap-3 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">Simpan</button>
-                        <button type="button" onclick="sourceModalCloseSaldo(this)" data-modal-target="sourceModalSaldo"
+                        <button type="button" onclick="sourceModalCloseSaldo(this)"
+                            data-modal-target="sourceModalSaldo"
                             class="bg-red-600 hover:bg-red-700 flex items-center gap-3 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">Batal</button>
                     </div>
                 </form>
@@ -258,18 +265,12 @@
                         let registers = response.data.pendapatan;
                         console.log(registers);
                         dataNabil = registers;
-
+                        let userRole = document.getElementById('userRole').value;
                         let columnConfigs = [{
                                 data: 'no',
                                 render: (data, type, row, meta) => {
                                     return `<div style="text-align:center">${meta.row + 1}.</div>`;
                                 },
-                            },
-                            {
-                                data: 'klasifikasi',
-                                render: (data, type, row) => {
-                                    return data.klasifikasi;
-                                }
                             }, {
                                 data: 'item_pendapatan',
                                 render: (data, type, row) => {
@@ -305,31 +306,67 @@
                                 render: (data, type, row) => {
                                     return data;
                                 }
-                            }, {
+                            },
+                            {
+                                data: 'keterangan',
+                                render: (data, type, row) => {
+                                    return data;
+                                }
+                            },
+                            //                 {
+                            //                     data: {
+                            //                         no: 'no',
+                            //                         name: 'name'
+                            //                     },
+                            //                     render: (data) => {
+                            //                         var editUrl = "{{ route('pendapatan.show', ':id') }}"
+                            //                             .replace(':id', data.id);
+
+                            //                         let deleteUrl =
+                            //                             `<button onclick="return pendapatanDelete('${data.id}','${data.item_pendapatan}', '${data.id_pendapatan}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i class="fas fa-trash"></i></button>`;
+                            //                         return `
+                    //     <a href="${editUrl}" class="group mr-3 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                    //         <i class="fas fa-edit"></i>
+                    //         <div class="absolute py-1 px-4 bg-gray-800 -mt-6 -ml-14 text-white text-xs rounded-md hidden group-hover:block">
+                    //             Edit
+                    //         </div>
+                    //     </a>
+                    //     ${deleteUrl}
+                    // `;
+                            //                     }
+                            //                 },
+                        ];
+
+                        if (userRole === 'S') {
+                            columnConfigs.push({
                                 data: {
                                     no: 'no',
                                     name: 'name'
                                 },
                                 render: (data) => {
-                                    var editUrl = "{{ route('pendapatan.show', ':id') }}".replace(
-                                        ':id',
-                                        data.id
-                                    );
+                                    var editUrl = "{{ route('pendapatan.show', ':id') }}"
+                                        .replace(':id', data.id);
 
-                                    let deleteUrl =
-                                        `<button onclick="return pendapatanDelete('${data.id}','${data.item_pendapatan}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white"><i class="fas fa-trash"></i></button>`;
-                                    return `
-                            <a href="${editUrl}" class="group mr-3 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
-                            <i class="fas fa-edit"></i>
-                            <div class="absolute py-1 px-4 bg-gray-800 -mt-6 -ml-14 text-white text-xs rounded-md hidden group-hover:block">
-                                Edit
-                            </div>
-                        </a>
-                        ${deleteUrl}
-                        `;
+                                    let deleteUrl = `
+                                        <button onclick="return pendapatanDelete('${data.id}','${data.item_pendapatan}', '${data.id_pendapatan}')"
+                                            class="bg-red-500 hover:bg-red-300 px-3 py-1 rounded-md text-xs text-white">
+                                            <i class="fas fa-trash"></i>
+                                        </button>`;
+
+                                                            let actionButtons = `
+                                        <a href="${editUrl}" class="group mr-3 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
+                                            <i class="fas fa-edit"></i>
+                                            <div class="absolute py-1 px-4 bg-gray-800 -mt-6 -ml-14 text-white text-xs rounded-md hidden group-hover:block">
+                                                Edit
+                                            </div>
+                                        </a>`;
+
+                                    actionButtons += deleteUrl;
+
+                                    return actionButtons;
                                 }
-                            },
-                        ];
+                            });
+                        }
 
                         const dataTableConfig = {
                             data: registers,
@@ -397,12 +434,13 @@
     </script>
 
     <script>
-        const pendapatanDelete = async (id, item_pendapatan) => {
+        const pendapatanDelete = async (id, item_pendapatan, id_pendapatan) => {
             let tanya = confirm(`Apakah anda yakin untuk menghapus pendapatan ${item_pendapatan} ?`);
             if (tanya) {
                 await axios.post(`/pendapatan/${id}`, {
                         '_method': 'DELETE',
-                        '_token': $('meta[name="csrf-token"]').attr('content')
+                        '_token': $('meta[name="csrf-token"]').attr('content'),
+                        'id_pendapatan': id_pendapatan
                     })
                     .then(function(response) {
                         // Handle success

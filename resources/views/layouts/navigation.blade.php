@@ -34,11 +34,11 @@
                                 <ul x-show="isOpen" class="py-2 text-sm text-gray-700 dark:text-gray-400">
                                     <li>
                                         <a href="{{ route('klasifikasi.index') }}"
-                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Klasifikasi</a>
+                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Klasifikasi Pendapatan</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('jenis_pengeluaran.index') }}"
-                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jenis
+                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Klasifikasi
                                             Pengeluaran</a>
                                     </li>
                                 </ul>
@@ -157,11 +157,11 @@
                             <ul x-show="isOpen" class="py-2 text-sm text-gray-700 dark:text-gray-400">
                                 <li>
                                     <a href="{{ route('klasifikasi.index') }}"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Klasifikasi</a>
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Klasifikasi Pendapatan</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('jenis_pengeluaran.index') }}"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jenis
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Klasifikasi
                                         Pengeluaran</a>
                                 </li>
                             </ul>

@@ -112,23 +112,25 @@ class PendapatanController extends Controller
 
         $penerimaan_awal = $request->input('penerimaan_awal');
         $penerimaan = $request->input('penerimaan');
+        $id_pendapatan = $request->input('id_pendapatan');
 
-        // $datas = Saldo::all();
+        // Calculate the difference in penerimaan
+        $difference = $penerimaan - $penerimaan_awal;
 
-        // if ($penerimaan_awal > $penerimaan) {
-        //     $hasil = $penerimaan_awal - $penerimaan;
-        //     foreach ($datas as $d) {
-        //         $d->saldo -= $hasil;
-        //         $d->save();
-        //     }
-        // } else {
-        //     $hasil = $penerimaan - $penerimaan_awal;
-        //     foreach ($datas as $d) {
-        //         $d->saldo += $hasil;
-        //         $d->save();
-        //     }
-        // }
-
+        // Fetch the related saldo
+        $saldo = Saldo::where('id_pendapatan', $id_pendapatan)->first();
+        if ($saldo) {
+            // Update the saldo based on the difference
+            $saldo->kredit += $difference;
+            $saldo->save();
+        } else {
+            // If no saldo record exists, create a new one
+            Saldo::create([
+                'id_pendapatan' => $id_pendapatan,
+                'debit' => 0,
+                'kredit' => $penerimaan,
+            ]);
+        }
 
         $datas = Pendapatan::findOrFail($id);
         $datas->update($data);
@@ -140,10 +142,20 @@ class PendapatanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, $id)
     {
-        $data = Pendapatan::findOrFail($id);
-        $data->delete();
-        return back()->with('message_delete','Data Pendapatan Sudah dihapus');
+        // Find the pendapatan record
+        $pendapatan = Pendapatan::findOrFail($id);
+
+        // Get id_pendapatan from the request
+        $id_pendapatan = $request->input('id_pendapatan');
+
+        // Delete the related saldo records
+        Saldo::where('id_pendapatan', $id_pendapatan)->delete();
+
+        // Delete the pendapatan record
+        $pendapatan->delete();
+
+        return back()->with('message_delete', 'Data Pendapatan dan Saldo terkait sudah dihapus');
     }
 }
