@@ -30,7 +30,7 @@
                             <div class="p-1 rounded-full border">
                                 <i class="fa-solid fa-file-lines"></i>
                             </div>
-                            <div class="font-semibold text-slate-700 text-lg px-1">Klasifikasi Pendapatan</div>
+                            <div class="font-semibold text-slate-700 text-lg px-1 text-wrap">Klasifikasi Pendapatan</div>
                         </div>
                         <div class="font-bold text-slate-900 text-4xl py-3">
                             @php
@@ -51,7 +51,7 @@
                             <div class="p-1 rounded-full border">
                                 <i class="fa-solid fa-tarp"></i>
                             </div>
-                            <div class="font-semibold text-slate-700 text-lg px-1">Klasifikasi Pengeluaran</div>
+                            <div class="font-semibold text-slate-700 text-lg px-1 text-wrap">Klasifikasi Pengeluaran</div>
                         </div>
                         <div class="font-bold text-slate-900 text-4xl py-3">
                             @php
@@ -72,9 +72,9 @@
                             <div class="p-1 rounded-full border">
                                 <i class="fa-solid fa-money-check-dollar"></i>
                             </div>
-                            <div class="font-semibold text-slate-700 text-lg px-1">Pendapatan</div>
+                            <div class="font-semibold text-slate-700 text-lg px-1 text-wrap">Pendapatan</div>
                         </div>
-                        <div class="font-bold text-slate-900 text-4xl py-3">
+                        <div class="font-bold text-slate-900 text-4xl py-3 text-wrap">
                             Rp. {{ number_format($sumPendapatan, 0, ',', '.') }}
                         </div>
                     </div>
@@ -90,9 +90,9 @@
                             <div class="p-1 rounded-full border">
                                 <i class="fa-solid fa-coins"></i>
                             </div>
-                            <div class="font-semibold text-slate-700 text-lg px-1">Pengeluaran</div>
+                            <div class="font-semibold text-slate-700 text-lg px-1 text-wrap">Pengeluaran</div>
                         </div>
-                        <div class="font-bold text-slate-900 text-4xl py-3">
+                        <div class="font-bold text-slate-900 text-4xl py-3 text-wrap">
                             Rp. {{ number_format($sumPengeluaran, 0, ',', '.') }}
                         </div>
                     </div>

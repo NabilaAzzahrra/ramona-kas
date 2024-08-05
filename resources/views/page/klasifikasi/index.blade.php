@@ -147,29 +147,29 @@
         });
 
 
-        // validasi data sukses tambah start
-        document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('dataForm');
-        const successMessage = document.getElementById('successMessage');
+    //     // validasi data sukses tambah start
+    //     document.addEventListener('DOMContentLoaded', function() {
+    //     const form = document.getElementById('dataForm');
+    //     const successMessage = document.getElementById('successMessage');
 
-        form.addEventListener('submit', async function(event) {
-            event.preventDefault();
+    //     form.addEventListener('submit', async function(event) {
+    //         event.preventDefault();
 
-            // Assuming the form submission is successful
-            try {
-                let response = await axios.post(form.action, new FormData(form));
-                if (response.status === 200) {
-                    successMessage.classList.remove('hidden');
-                    setTimeout(() => {
-                        successMessage.classList.add('hidden');
-                    }, 5000);
-                }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-            }table.ajax.reload();
-        });
-    });
-        // validasi data sukses tambah end
+    //         // Assuming the form submission is successful
+    //         try {
+    //             let response = await axios.post(form.action, new FormData(form));
+    //             if (response.status === 200) {
+    //                 successMessage.classList.remove('hidden');
+    //                 setTimeout(() => {
+    //                     successMessage.classList.add('hidden');
+    //                 }, 5000);
+    //             }
+    //         } catch (error) {
+    //             console.error('Error submitting form:', error);
+    //         }table.ajax.reload();
+    //     });
+    // });
+    //     // validasi data sukses tambah end
 
 
         // modal close edit start
