@@ -15,6 +15,7 @@ class Pendapatan extends Model
         'item_pendapatan',
         'tgl_pendapatan',
         'tagihan',
+        'tgl_bon',
         'retur',
         'penerimaan',
         'kekurangan',

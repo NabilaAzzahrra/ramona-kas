@@ -165,15 +165,31 @@ class LaporanController extends Controller
             )
             ->get();
 
-            if ($orientation === 'landscape') {
-                return view('page.laporan.print1', compact(
-                    'transactions', 'transactions_kurang', 'transactions_kredit', 'transactions_tunai', 'transactions_keluar', 'transactions_umum', 'transactions_penerimaan', 'start_date', 'end_date'
-                ));
-            } else {
-                return view('page.laporan.print2', compact(
-                    'transactions', 'transactions_kurang', 'transactions_kredit', 'transactions_tunai', 'transactions_keluar', 'transactions_umum', 'transactions_penerimaan', 'start_date', 'end_date'
-                ));
-            }
+        if ($orientation === 'landscape') {
+            return view('page.laporan.print1', compact(
+                'transactions',
+                'transactions_kurang',
+                'transactions_kredit',
+                'transactions_tunai',
+                'transactions_keluar',
+                'transactions_umum',
+                'transactions_penerimaan',
+                'start_date',
+                'end_date'
+            ));
+        } else {
+            return view('page.laporan.print2', compact(
+                'transactions',
+                'transactions_kurang',
+                'transactions_kredit',
+                'transactions_tunai',
+                'transactions_keluar',
+                'transactions_umum',
+                'transactions_penerimaan',
+                'start_date',
+                'end_date'
+            ));
+        }
 
         // return view('page.laporan.print1', compact('transactions', 'transactions_kurang', 'transactions_kredit', 'transactions_tunai', 'transactions_keluar', 'transactions_umum', 'transactions_penerimaan', 'start_date', 'end_date'));
     }

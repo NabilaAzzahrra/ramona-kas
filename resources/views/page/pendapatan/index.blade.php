@@ -72,7 +72,8 @@
                                         <thead>
                                             <tr>
                                                 <th class="w-7">No.</th>
-                                                <th>Uraian</th>
+                                                <th class="w-52">Uraian</th>
+                                                <th>Tanggal BON</th>
                                                 <th>Tanggal Pendapatan</th>
                                                 <th>Tagihan</th>
                                                 <th>Retur</th>
@@ -80,6 +81,7 @@
                                                 <th>Kekurangan Bayar</th>
                                                 <th>Kelebihan Bayar</th>
                                                 <th>Keterangan</th>
+                                                <th>User</th>
                                                 @if (Auth::check() && Auth::user()->role === 'S')
                                                     <th>Action</th>
                                                 @endif
@@ -274,7 +276,12 @@
                             }, {
                                 data: 'item_pendapatan',
                                 render: (data, type, row) => {
-                                    return data;
+                                    return `<span class="text-wrap">${data}</span>`;
+                                }
+                            },{
+                                data: 'tgl_bon',
+                                render: (data, type, row) => {
+                                    return moment(data).format('DD-MM-YYYY');
                                 }
                             }, {
                                 data: 'tgl_pendapatan',
@@ -311,6 +318,11 @@
                                 data: 'keterangan',
                                 render: (data, type, row) => {
                                     return data;
+                                }
+                            },{
+                                data: 'user',
+                                render: (data, type, row) => {
+                                    return data.name;
                                 }
                             },
                             //                 {

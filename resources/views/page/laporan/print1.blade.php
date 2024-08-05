@@ -121,8 +121,9 @@
     </div>
     @foreach ($transactions_penerimaan as $tp)
         @php
+        $tot_penerimaan += $tp->penerimaan;
             $p_penerimaan = $tp->penerimaan;
-            $saldoAwalPenerimaan = $saldo_akhir + $tp->penerimaan;
+            $saldoAwalPenerimaan = $saldo_akhir + $tot_penerimaan;
         @endphp
     @endforeach
     <div class="mt-10">
@@ -131,12 +132,13 @@
                 <tr>
                     <th rowspan="2">NO</th>
                     <th rowspan="2">URAIAN</th>
-                    <th colspan="4">PENDAPATAN</th>
+                    <th colspan="5">PENDAPATAN</th>
                     <th rowspan="2">KEKURANGAN</th>
                     <th rowspan="2">KELEBIHAN</th>
                     <th rowspan="2">KETERANGAN</th>
                 </tr>
                 <tr>
+                    <th class="text-wrap w-20">TANGGAL BON</th>
                     <th class="text-wrap w-20">TANGGAL TRANSAKSI</th>
                     <th>TAGIHAN</th>
                     <th>RETUR</th>
@@ -147,6 +149,7 @@
                 <tr>
                     <td class="text-center bg-[#808080] text-white font-bold">I</td>
                     <td class="text-left pl-4 bg-[#808080] text-white font-bold">SALDO AWAL</td>
+                    <td class="text-center"></td>
                     <td class="text-center">{{ date('d/m/y', strtotime($item->tgl_transaksi)) }}</td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4">0</td>
@@ -159,6 +162,7 @@
                 <tr>
                     <td class="text-center bg-[#808080] text-white font-bold"></td>
                     <td class="text-left pl-4 bg-[#808080] text-white font-bold">PENERIMAAN</td>
+                    <td class="text-center"></td>
                     <td class="text-center">{{ date('d/m/y', strtotime($tp->tgl_transaksi ?? null)) }}</td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4">0</td>
@@ -169,9 +173,9 @@
                     <td class="text-left pl-4">-</td>
                 </tr>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="6"></td>
                     <td class="text-right pr-4 bg-[#808080] text-white font-bold">
-                        {{ number_format($saldoAwalPenerimaan ?? 0, 0, ',', '.') }}</td>
+                        {{ number_format(($saldo_akhir ?? 0) + ($p_penerimaan ?? 0), 0, ',', '.') }}</td>
                     <td colspan="3"></td>
                 </tr>
                 @php
@@ -189,7 +193,8 @@
                     <tr>
                         <td class="text-center">{{ $no++ }}</td>
                         <td class="text-left pl-4">{{ $tu->item }}</td>
-                        <td class="text-center">{{ date('d/m/y', strtotime($item->tgl_transaksi)) }}</td>
+                        <td class="text-center">{{ $tu->tgl_bon ? date('d/m/y', strtotime($tu->tgl_bon)) : '' }}</td>
+                        <td class="text-center">{{ date('d/m/y', strtotime($tu->tgl_transaksi)) }}</td>
                         <td class="text-right pr-4">{{ number_format($tu->tagihan, 0, ',', '.') }}</td>
                         <td class="text-right pr-4">{{ $tu->retur }}</td>
                         <td class="text-right pr-4">
@@ -222,6 +227,7 @@
                     <tr>
                         <td class="text-center">{{ $no++ }}</td>
                         <td class="text-left pl-4">{{ $tk->item }}</td>
+                        <td class="text-center">{{ $tk->tgl_bon ? date('d/m/y', strtotime($tk->tgl_bon)) : '' }}</td>
                         <td class="text-center">{{ date('d/m/y', strtotime($tk->tgl_transaksi)) }}</td>
                         <td class="text-right pr-4">{{ number_format($tk->tagihan, 0, ',', '.') }}</td>
                         <td class="text-right pr-4">{{ number_format($tk->retur, 0, ',', '.') }}</td>
@@ -254,6 +260,7 @@
                     <tr>
                         <td class="text-center">{{ $not++ }}</td>
                         <td class="text-left pl-4">{{ $tt->item }}</td>
+                        <td class="text-center">{{ $tt->tgl_bon ? date('d/m/y', strtotime($tt->tgl_bon)) : '' }}</td>
                         <td class="text-center">{{ date('d/m/y', strtotime($tt->tgl_transaksi)) }}</td>
                         <td class="text-right pr-4">{{ number_format($tt->tagihan, 0, ',', '.') }}</td>
                         <td class="text-right pr-4">{{ number_format($tt->retur, 0, ',', '.') }}</td>
@@ -281,9 +288,10 @@
                         ($jml_kekurangan_tunai ?? 0) + ($jml_kekurangan_kredit ?? 0) + ($jml_kekurangan_umum ?? 0);
                     $jml_kelebihan =
                         ($jml_kelebihan_tunai ?? 0) + ($jml_kelebihan_kredit ?? 0) + ($jml_kelebihan_umum ?? 0);
-                    $t_pendapatan = ($jml_penerimaan ?? 0) + ($saldoAwalPenerimaan ?? 0);
+                    $t_pendapatan = ($jml_penerimaan ?? 0) + ($saldo_akhir ?? 0) + ($p_penerimaan ?? 0);
                 @endphp
                 <tr>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -301,7 +309,7 @@
                 </tr>
                 <tr class="bg-[#808080] text-white">
                     <td></td>
-                    <th colspan="4">TOTAL PENDAPATAN</th>
+                    <th colspan="5">TOTAL PENDAPATAN</th>
                     <th class="text-right pr-4">{{ number_format($t_pendapatan, 0, ',', '.') }}</th>
                     <td></td>
                     <td></td>
@@ -334,6 +342,7 @@
                 <tr>
                     <th rowspan="2">NO</th>
                     <th rowspan="2">URAIAN</th>
+                    <th rowspan="2" class="w-20">TANGGAL BON</th>
                     <th rowspan="2" class="w-20">TANGGAL TRANSAKSI</th>
                     <th colspan="5">PENGELUARAN</th>
                     <th rowspan="2">KETERANGAN</th>
@@ -348,43 +357,29 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $t_umum = 0;
+                    $t_operasional = 0;
+                    $t_bahan = 0;
+                    $t_prive = 0;
+                    $t_total = 0;
+                    $no = 1;
+                @endphp
                 @foreach ($transactions_keluar as $t)
                     @php
                         $umum = 0;
                         $operasional = 0;
                         $bahan = 0;
                         $prive = 0;
-                        $t_umum = 0;
-                        $t_operasional = 0;
-                        $t_bahan = 0;
-                        $t_prive = 0;
-                        $t_total = 0;
-                        $no = 0;
+
                         if ($t->jenis_pengeluaran === 'UMUM') {
                             $umum = $t->pengeluaran;
-                            $operasional = 0;
-                            $bahan = 0;
-                            $prive = 0;
                         } elseif ($t->jenis_pengeluaran === 'OPERASIONAL') {
-                            $umum = 0;
                             $operasional = $t->pengeluaran;
-                            $bahan = 0;
-                            $prive = 0;
                         } elseif ($t->jenis_pengeluaran === 'BAHAN') {
-                            $umum = 0;
-                            $operasional = 0;
                             $bahan = $t->pengeluaran;
-                            $prive = 0;
                         } elseif ($t->jenis_pengeluaran === 'PRIVE') {
-                            $umum = 0;
-                            $operasional = 0;
-                            $bahan = 0;
                             $prive = $t->pengeluaran;
-                        } else {
-                            $umum = 0;
-                            $operasional = 0;
-                            $bahan = 0;
-                            $prive = 0;
                         }
 
                         $total = $umum + $operasional + $bahan + $prive;
@@ -393,11 +388,11 @@
                         $t_bahan += $bahan;
                         $t_prive += $prive;
                         $t_total += $total;
-                        $no = 1;
                     @endphp
                     <tr>
                         <td class="text-center">{{ $no++ }}</td>
                         <td class="text-left pl-4">{{ $t->item }}</td>
+                        <td class="text-center">{{ $t->tgl_bon ? date('d/m/y', strtotime($t->tgl_bon)) : '' }}</td>
                         <td class="text-center">{{ date('d/m/y', strtotime($t->tgl_transaksi)) }}</td>
                         <td class="text-right pr-4">{{ number_format($umum, 0, ',', '.') }}</td>
                         <td class="text-right pr-4">{{ number_format($operasional, 0, ',', '.') }}</td>
@@ -411,6 +406,7 @@
             </tbody>
             <tfoot>
                 <tr>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -433,6 +429,7 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
                     <th class="bg-[#808080] text-white text-right pr-4">{{ number_format($t_total, 0, ',', '.') }}
                     </th>
                     <th></th>
@@ -440,6 +437,7 @@
                         {{ number_format($t_pendapatan - $t_total, 0, ',', '.') }}</th>
                 </tr>
             </tfoot>
+
         </table>
     </div>
 
@@ -463,7 +461,7 @@
                     <td class="text-center">{{ number_format($jml_penerimaan ?? 0, 0, ',', '.') }}</td>
                     <td class="text-center">{{ number_format($t_total ?? 0, 0, ',', '.') }}</td>
                     <th class="text-center">
-                        {{ number_format(($saldo_akhir ?? 0) + ($p_penerimaan??0) + ($jml_penerimaan??0) - ($t_total??0), 0, ',', '.') }}
+                        {{ number_format(($saldo_akhir ?? 0) + ($p_penerimaan ?? 0) + ($jml_penerimaan ?? 0) - ($t_total ?? 0), 0, ',', '.') }}
                     </th>
                 </tr>
             </tbody>

@@ -11,6 +11,7 @@ class Pengeluaran extends Model
 
     protected $fillable = [
         'id_pengeluaran',
+        'tgl_bon',
         'item_pengeluaran',
         'tgl_pengeluaran',
         'id_jenis_pengeluaran',

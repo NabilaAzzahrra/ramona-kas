@@ -190,7 +190,19 @@
                                 }
                             },
                             {
+                                data: 'tgl_bon',
+                                render: (data, type, row) => {
+                                    return moment(data).format('DD-MM-YYYY');
+                                }
+                            },
+                            {
                                 data: 'uraian',
+                                render: (data, type, row) => {
+                                    return data;
+                                }
+                            },
+                            {
+                                data: 'keterangan',
                                 render: (data, type, row) => {
                                     return data;
                                 }

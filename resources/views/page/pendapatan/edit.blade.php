@@ -15,31 +15,45 @@
                                 EDIT PENDAPATAN
                             </div>
                             <hr>
-                            <form action="{{ route('pendapatan.update',  $pendapatan->id) }}" method="post">
+                            <form action="{{ route('pendapatan.update', $pendapatan->id) }}" method="post">
                                 @csrf
                                 @method('PATCH')
                                 <div class="p-4 rounded-xl">
                                     <div class="flex gap-5">
-                                        <input type="hidden" name="id_pendapatan" value="{{$pendapatan->id_pendapatan}}">
-                                        <div class="mb-5 w-full">
-                                            <label for="klasifikasi"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Klasifikasi
-                                                <span class="text-red-500">*</span></label>
-                                            <select
-                                                class="js-example-placeholder-single js-states form-control w-full m-6"
-                                                name="klasifikasi" data-placeholder="Pilih Klasifikasi">
-                                                <option value="{{ $pendapatan->id_klasifikasi }}">
-                                                    {{ $pendapatan->klasifikasi->klasifikasi }}</option>
-                                                @foreach ($klasifikasi as $m)
-                                                    @if ($m->id != $pendapatan->id_klasifikasi)
-                                                        <option value="{{ $m->id }}">
-                                                            {{ $m->klasifikasi }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                            <span
-                                                class="text-sm m-l text-red-500">{{ $errors->first('klasifikasi') }}</span>
+                                        <input type="hidden" name="id_pendapatan"
+                                            value="{{ $pendapatan->id_pendapatan }}">
+                                        <div class="flex gap-5 w-full">
+                                            <div class="mb-5 w-full">
+                                                <label for="klasifikasi"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Klasifikasi
+                                                    <span class="text-red-500">*</span></label>
+                                                <select
+                                                    class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                    name="klasifikasi" data-placeholder="Pilih Klasifikasi">
+                                                    <option value="{{ $pendapatan->id_klasifikasi }}">
+                                                        {{ $pendapatan->klasifikasi->klasifikasi }}</option>
+                                                    @foreach ($klasifikasi as $m)
+                                                        @if ($m->id != $pendapatan->id_klasifikasi)
+                                                            <option value="{{ $m->id }}">
+                                                                {{ $m->klasifikasi }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                                <span
+                                                    class="text-sm m-l text-red-500">{{ $errors->first('klasifikasi') }}</span>
+                                            </div>
+                                            <div class="mb-5 w-full">
+                                                <label for="tgl_bon"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal Bon
+                                                    <span class="text-red-500">*</span></label>
+                                                <input type="date" id="tgl_bon" name="tgl_bon"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="Masukan Uraian disini ..."
+                                                    value="{{ $pendapatan->tgl_bon }}" required />
+                                                <span
+                                                    class="text-sm m-l text-red-500">{{ $errors->first('klasifikasi') }}</span>
+                                            </div>
                                         </div>
                                         <div class="mb-5 w-full">
                                             <label for="uraian"
@@ -87,7 +101,8 @@
                                         </div>
                                         <div class="mb-5 w-full" hidden>
                                             <label for="penerimaan_awal"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Penerimaan awal</label>
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Penerimaan
+                                                awal</label>
                                             <input type="number" id="penerimaan_awal" name="penerimaan_awal"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Masukan Penerimaan disini ..."

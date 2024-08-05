@@ -15,23 +15,39 @@
                                 FORM INPUT PENGELUARAN
                             </div>
                             <hr>
-                            <form action="{{ route('pengeluaran.store') }}" method="post">
+                            <form id="pengeluaran-form" action="{{ route('pengeluaran.store') }}" method="post" onsubmit="return confirmSubmission(event)">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="flex gap-5">
-                                        <div class="mb-5 w-full">
-                                            <label for="klasifikasi"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Klasifikasi Pengeluaran
-                                                <span class="text-red-500">*</span></label>
-                                            <select
-                                                class="js-example-placeholder-single js-states form-control w-full m-6"
-                                                name="klasifikasi" data-placeholder="Pilih Klasifikasi Pengeluaran">
-                                                <option value="">Pilih...</option>
-                                                @foreach ($jenis_pengeluaran as $m)
-                                                    <option value="{{ $m->id }}">{{ $m->jenis_pengeluaran }}</option>
-                                                @endforeach
-                                            </select>
-                                            <span class="text-sm m-l text-red-500">{{ $errors->first('klasifikasi') }}</span>
+                                        <div class="flex gap-5 w-full">
+                                            <div class="mb-5 w-full">
+                                                <label for="klasifikasi"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Klasifikasi
+                                                    Pengeluaran
+                                                    <span class="text-red-500">*</span></label>
+                                                <select
+                                                    class="js-example-placeholder-single js-states form-control w-full m-6" id="klasifikasi"
+                                                    name="klasifikasi" data-placeholder="Pilih Klasifikasi Pengeluaran">
+                                                    <option value="">Pilih...</option>
+                                                    @foreach ($jenis_pengeluaran as $m)
+                                                        <option value="{{ $m->id }}">{{ $m->jenis_pengeluaran }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span
+                                                    class="text-sm m-l text-red-500">{{ $errors->first('klasifikasi') }}</span>
+                                            </div>
+                                            <div class="mb-5 w-full">
+                                                <label for="tgl_bon"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
+                                                    Bon
+                                                    <span class="text-red-500"></span></label>
+                                                <input type="date" id="tgl_bon" name="tgl_bon"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="Masukan Uraian disini ..." />
+                                                <span
+                                                    class="text-sm m-l text-red-500">{{ $errors->first('tgl_bon') }}</span>
+                                            </div>
                                         </div>
                                         <div class="mb-5 w-full">
                                             <label for="uraian"
@@ -51,7 +67,8 @@
                                         </div>
                                         <div class="mb-5 w-full">
                                             <label for="pengeluaran"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pengeluaran</label>
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nominal
+                                                Pengeluaran</label>
                                             <input type="number" id="pengeluaran" name="pengeluaran"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Masukan Pengeluaran disini ..." required />
@@ -67,4 +84,20 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function confirmSubmission(event) {
+            event.preventDefault();
+            const klasifikasiElement = document.getElementById('klasifikasi');
+            const klasifikasiText = klasifikasiElement.options[klasifikasiElement.selectedIndex].text;
+            const tgl_bon = document.getElementById('tgl_bon').value;
+            const uraian = document.getElementById('uraian').value;
+            const keterangan = document.getElementById('keterangan').value;
+            const pengeluaran = document.getElementById('pengeluaran').value;
+            const confirmation = confirm(`Apakah data berikut sudah sesuai?\n\nKlasifikasi: ${klasifikasiText}\n\nTanggal Bon: ${tgl_bon}\n\nUraian: ${uraian}\n\nKeterangan: ${keterangan}\n\nNominal Pengeluaran: ${pengeluaran}\n\nJika sudah sesuai, tekan OK untuk melanjutkan.`);
+            if (confirmation) {
+                document.getElementById('pengeluaran-form').submit();
+            }
+        }
+    </script>
 </x-app-layout>
