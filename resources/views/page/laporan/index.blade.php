@@ -68,6 +68,8 @@
                 <form id="filterForm" action="{{ route('laporan.create') }}" method="GET" target="_blank">
                     <input type="hidden" name="orientation" value="">
                     <div class="flex flex-col p-4 space-y-6">
+                        <input type="text" id="akun" name="akun" value="{{ Auth::user()->name}}"
+                        class="px-3 py-2 border shadow rounded w-full block text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
                         <div>
                             <label for="from_date" class="block mb-2 text-sm font-medium text-gray-900">Dari
                                 Tanggal</label>

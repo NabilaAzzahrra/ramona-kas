@@ -29,7 +29,7 @@ class SaldoController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'tgl_saldo' => date('Y-m-d'),
+            'tgl_saldo' => $request->input('tgl_saldo'),
             'id_pendapatan' => 0,
             'id_pengeluaran' => 0,
             'debit' => 0,

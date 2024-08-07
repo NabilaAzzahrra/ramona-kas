@@ -30,6 +30,28 @@ class LaporanController extends Controller
         // $transactions = Laporan::whereBetween('tgl_transaksi', [$start_date, $end_date])->get();
         $transactions_kurang = Laporan::where('tgl_transaksi', '<', $start_date)->get();
 
+        $saldo = DB::table('view_transaksi')
+            ->leftJoin('pendapatan', 'view_transaksi.id_transaksi', '=', 'pendapatan.id_pendapatan')
+            ->leftJoin('klasifikasi', 'pendapatan.id_klasifikasi', '=', 'klasifikasi.id')
+            ->leftJoin('users as pendapatan_user', 'pendapatan.user', '=', 'pendapatan_user.id')
+            ->leftJoin('pengeluaran', 'view_transaksi.id_transaksi', '=', 'pengeluaran.id_pengeluaran')
+            ->leftJoin('jenis_pengeluaran', 'pengeluaran.id_jenis_pengeluaran', '=', 'jenis_pengeluaran.id')
+            ->leftJoin('users as pengeluaran_user', 'pengeluaran.user', '=', 'pengeluaran_user.id')
+            ->whereBetween('view_transaksi.tgl_transaksi', [$start_date, $end_date])
+            ->where(function ($query) {
+                $query->where('item', 'SALDO AWAL');
+            })
+            ->select(
+                'view_transaksi.*',
+                'pendapatan.*',
+                'klasifikasi.*',
+                'pendapatan_user.*',
+                'pengeluaran.keterangan as keterangan_luar',
+                'jenis_pengeluaran.*',
+                'pengeluaran_user.name as name_luar'
+            )
+            ->get();
+
         $transactions = DB::table('view_transaksi')
             ->leftJoin('pendapatan', 'view_transaksi.id_transaksi', '=', 'pendapatan.id_pendapatan')
             ->leftJoin('klasifikasi', 'pendapatan.id_klasifikasi', '=', 'klasifikasi.id')
@@ -175,7 +197,8 @@ class LaporanController extends Controller
                 'transactions_umum',
                 'transactions_penerimaan',
                 'start_date',
-                'end_date'
+                'end_date',
+                'saldo',
             ));
         } else {
             return view('page.laporan.print2', compact(
@@ -187,7 +210,8 @@ class LaporanController extends Controller
                 'transactions_umum',
                 'transactions_penerimaan',
                 'start_date',
-                'end_date'
+                'end_date',
+                'saldo',
             ));
         }
 

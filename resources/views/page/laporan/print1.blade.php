@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Document-{{ Auth::user()->name }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         table,
@@ -30,7 +30,7 @@
 
 <body>
 
-    <div class="container bg-red-500 w-[1500px]" hidden>
+    {{-- <div class="container bg-red-500 w-[1500px]" hidden>
         item, pengeluaran, pendapatan, keterangan, klasifikasi/jenis_pengeluaran, user<br>
         @php
             $jml_pendapatan = 0;
@@ -71,7 +71,7 @@
             @endphp
         @endforeach
         saldo akhir ==== 0 === {{ $saldo_akhir_now }}<br>
-    </div>
+    </div> --}}
 
     {{-- PENDAPATAN --}}
 
@@ -119,13 +119,20 @@
         <div class="font-bold text-center">{{ date('d/m/Y', strtotime($start_date)) }} -
             {{ date('d/m/Y', strtotime($end_date)) }}</div>
     </div>
+    @php
+        $tot_penerimaan = 0;
+        $tgl_penerimaan = null;
+        $p_penerimaan = 0;
+    @endphp
     @foreach ($transactions_penerimaan as $tp)
         @php
-        $tot_penerimaan += $tp->penerimaan;
-            $p_penerimaan = $tp->penerimaan;
-            $saldoAwalPenerimaan = $saldo_akhir + $tot_penerimaan;
+            $tot_penerimaan += $tp->penerimaan;
+            $p_penerimaan += $tp->penerimaan;
+            // $saldoAwalPenerimaan = $saldo_akhir + $tot_penerimaan;
+            $tgl_penerimaan = $tp->tgl_transaksi;
         @endphp
     @endforeach
+
     <div class="mt-10">
         <table class="w-full">
             <thead class="bg-[#808080] text-white">
@@ -146,28 +153,47 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $saldo_pertama = 0;
+                    $tgl_transaksi = null;
+                @endphp
+                @foreach ($saldo as $sal)
+                    @php
+                        $tgl_transaksi = $sal->tgl_transaksi;
+                        $saldo_pertama += $sal->pendapatan;
+                    @endphp
+                @endforeach
                 <tr>
                     <td class="text-center bg-[#808080] text-white font-bold">I</td>
                     <td class="text-left pl-4 bg-[#808080] text-white font-bold">SALDO AWAL</td>
                     <td class="text-center"></td>
-                    <td class="text-center">{{ date('d/m/y', strtotime($item->tgl_transaksi)) }}</td>
+                    <td class="text-center">
+                        @if ($tgl_transaksi)
+                            {{ date('d/m/y', strtotime($tgl_transaksi)) }}
+                        @endif
+                    </td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4 bg-[#808080] text-white font-bold">
-                        {{ number_format($saldo_akhir, 0, ',', '.') }}</td>
+                        {{ number_format($saldo_pertama, 0, ',', '.') }}</td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-left pl-4">-</td>
                 </tr>
+
                 <tr>
                     <td class="text-center bg-[#808080] text-white font-bold"></td>
                     <td class="text-left pl-4 bg-[#808080] text-white font-bold">PENERIMAAN</td>
                     <td class="text-center"></td>
-                    <td class="text-center">{{ date('d/m/y', strtotime($tp->tgl_transaksi ?? null)) }}</td>
+                    <td class="text-center">
+                        @if ($tgl_transaksi)
+                            {{ date('d/m/y', strtotime($tgl_penerimaan)) }}
+                        @endif
+                    </td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4 bg-[#808080] text-white font-bold">
-                        {{ number_format($tp->penerimaan ?? 0, 0, ',', '.') }}</td>
+                        {{ number_format($p_penerimaan ?? 0, 0, ',', '.') }}</td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-left pl-4">-</td>
@@ -175,7 +201,7 @@
                 <tr>
                     <td colspan="6"></td>
                     <td class="text-right pr-4 bg-[#808080] text-white font-bold">
-                        {{ number_format(($saldo_akhir ?? 0) + ($p_penerimaan ?? 0), 0, ',', '.') }}</td>
+                        {{ number_format(($saldo_pertama ?? 0) + ($p_penerimaan ?? 0), 0, ',', '.') }}</td>
                     <td colspan="3"></td>
                 </tr>
                 @php
@@ -288,7 +314,7 @@
                         ($jml_kekurangan_tunai ?? 0) + ($jml_kekurangan_kredit ?? 0) + ($jml_kekurangan_umum ?? 0);
                     $jml_kelebihan =
                         ($jml_kelebihan_tunai ?? 0) + ($jml_kelebihan_kredit ?? 0) + ($jml_kelebihan_umum ?? 0);
-                    $t_pendapatan = ($jml_penerimaan ?? 0) + ($saldo_akhir ?? 0) + ($p_penerimaan ?? 0);
+                    $t_pendapatan = ($jml_penerimaan ?? 0) + ($saldo_pertama ?? 0) + ($p_penerimaan ?? 0);
                 @endphp
                 <tr>
                     <td></td>
@@ -456,12 +482,12 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="text-center">{{ number_format($saldo_akhir ?? 0, 0, ',', '.') }}</td>
+                    <td class="text-center">{{ number_format($saldo_pertama ?? 0, 0, ',', '.') }}</td>
                     <td class="text-center">{{ number_format($p_penerimaan ?? 0, 0, ',', '.') }}</td>
                     <td class="text-center">{{ number_format($jml_penerimaan ?? 0, 0, ',', '.') }}</td>
                     <td class="text-center">{{ number_format($t_total ?? 0, 0, ',', '.') }}</td>
                     <th class="text-center">
-                        {{ number_format(($saldo_akhir ?? 0) + ($p_penerimaan ?? 0) + ($jml_penerimaan ?? 0) - ($t_total ?? 0), 0, ',', '.') }}
+                        {{ number_format(($saldo_pertama ?? 0) + ($p_penerimaan ?? 0) + ($jml_penerimaan ?? 0) - ($t_total ?? 0), 0, ',', '.') }}
                     </th>
                 </tr>
             </tbody>
@@ -470,7 +496,7 @@
 
 </body>
 <script>
-    window.print();
+    // window.print();
 </script>
 
 </html>

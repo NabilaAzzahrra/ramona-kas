@@ -153,6 +153,13 @@
                     <div class="flex flex-col p-3 space-y-2">
                         @csrf
                         <div>
+                            <label for="tgl_saldo" class="block mb-2 text-sm font-medium text-gray-900">Tanggal Saldo
+                            </label>
+                            <input type="date" id="tgl_saldo" name="tgl_saldo"
+                                class="px-3 py-2 shadow rounded w-full bg-slate-50 block text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer hover:shadow-lg"
+                                placeholder="Masukan tanggal saldo disini...">
+                        </div>
+                        <div>
                             <label for="saldo" class="block mb-2 text-sm font-medium text-gray-900">Saldo
                                 Awal</label>
                             <input type="number" id="saldo" name="saldo"
@@ -278,7 +285,7 @@
                                 render: (data, type, row) => {
                                     return `<span class="text-wrap">${data}</span>`;
                                 }
-                            },{
+                            }, {
                                 data: 'tgl_bon',
                                 render: (data, type, row) => {
                                     return moment(data).format('DD-MM-YYYY');
@@ -319,7 +326,7 @@
                                 render: (data, type, row) => {
                                     return data;
                                 }
-                            },{
+                            }, {
                                 data: 'user',
                                 render: (data, type, row) => {
                                     return data.name;
@@ -365,7 +372,7 @@
                                             <i class="fas fa-trash"></i>
                                         </button>`;
 
-                                                            let actionButtons = `
+                                    let actionButtons = `
                                         <a href="${editUrl}" class="group mr-3 bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
                                             <i class="fas fa-edit"></i>
                                             <div class="absolute py-1 px-4 bg-gray-800 -mt-6 -ml-14 text-white text-xs rounded-md hidden group-hover:block">

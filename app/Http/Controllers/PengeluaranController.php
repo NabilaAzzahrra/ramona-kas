@@ -56,7 +56,7 @@ class PengeluaranController extends Controller
             'id_pengeluaran' => $id_pengeluaran,
             'id_jenis_pengeluaran' => $request->input('klasifikasi'),
             'item_pengeluaran' => $request->input('uraian'),
-            'tgl_pengeluaran' => date('Y-m-d'),
+            'tgl_pengeluaran' => $request->input('tgl_pengeluaran'),
             'tgl_bon' => $request->input('tgl_bon'),
             'pengeluaran' => $request->input('pengeluaran'),
             'keterangan' => $request->input('keterangan'),
@@ -66,7 +66,7 @@ class PengeluaranController extends Controller
         Pengeluaran::create($data);
 
         $datasaldo = [
-            'tgl_saldo' =>  date('Y-m-d'),
+            'tgl_saldo' => $request->input('tgl_pengeluaran'),
             'id_pendapatan' => 0,
             'id_pengeluaran' => $id_pengeluaran,
             'debit' => $request->input('pengeluaran'),

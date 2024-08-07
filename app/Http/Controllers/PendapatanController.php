@@ -39,7 +39,7 @@ class PendapatanController extends Controller
             'id_klasifikasi' => $request->input('klasifikasi'),
             'id_pendapatan' => $id_pendapatan,
             'item_pendapatan' => $request->input('uraian'),
-            'tgl_pendapatan' => date('Y-m-d'),
+            'tgl_pendapatan' => $request->input('tgl_pendapatan'),
             'tgl_bon' => $request->input('tgl_bon'),
             'tagihan' => $request->input('tagihan'),
             'retur' => $request->input('retur'),
@@ -53,7 +53,7 @@ class PendapatanController extends Controller
         Pendapatan::create($data);
 
         $datasaldo = [
-            'tgl_saldo' =>  date('Y-m-d'),
+            'tgl_saldo' =>  $request->input('tgl_pendapatan'),
             'id_pendapatan' => $id_pendapatan,
             'id_pengeluaran' => 0,
             'debit' => 0,

@@ -49,12 +49,22 @@
                                                     class="text-sm m-l text-red-500">{{ $errors->first('tgl_bon') }}</span>
                                             </div>
                                         </div>
-                                        <div class="mb-5 w-full">
-                                            <label for="uraian"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Uraian</label>
-                                            <input type="text" id="uraian" name="uraian"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Masukan Uraian disini ..." required />
+                                        <div class="flex w-full gap-5">
+                                            <div class="mb-5 w-full">
+                                                <label for="tgl_pengeluaran"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
+                                                    Pengeluaran</label>
+                                                <input type="date" id="tgl_pengeluaran" name="tgl_pengeluaran"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="Masukan Uraian disini ..." required />
+                                            </div>
+                                            <div class="mb-5 w-full">
+                                                <label for="uraian"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Uraian</label>
+                                                <input type="text" id="uraian" name="uraian"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="Masukan Uraian disini ..." required />
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="flex gap-5">
@@ -99,5 +109,12 @@
                 document.getElementById('pengeluaran-form').submit();
             }
         }
+    </script>
+    <script>
+        const uraianInput = document.getElementById('uraian');
+
+        uraianInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
     </script>
 </x-app-layout>

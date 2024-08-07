@@ -15,7 +15,8 @@
                                 FORM INPUT PENDAPATAN
                             </div>
                             <hr>
-                            <form id="pendapatan-form" action="{{ route('pendapatan.store') }}" method="post" onsubmit="return confirmSubmission(event)">
+                            <form id="pendapatan-form" action="{{ route('pendapatan.store') }}" method="post"
+                                onsubmit="return confirmSubmission(event)">
                                 @csrf
                                 <div class="p-4 rounded-xl">
                                     <div class="flex gap-5">
@@ -25,8 +26,9 @@
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Klasifikasi
                                                     <span class="text-red-500">*</span></label>
                                                 <select
-                                                    class="js-example-placeholder-single js-states form-control w-full m-6" id="klasifikasi"
-                                                    name="klasifikasi" data-placeholder="Pilih Klasifikasi">
+                                                    class="js-example-placeholder-single js-states form-control w-full m-6"
+                                                    id="klasifikasi" name="klasifikasi"
+                                                    data-placeholder="Pilih Klasifikasi">
                                                     <option value="">Pilih...</option>
                                                     @foreach ($klasifikasi as $m)
                                                         <option value="{{ $m->id }}">{{ $m->klasifikasi }}
@@ -43,18 +45,28 @@
                                                     <span class="text-red-500"></span></label>
                                                 <input type="date" id="tgl_bon" name="tgl_bon"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    placeholder="Masukan Uraian disini ..."  />
+                                                    placeholder="Masukan Uraian disini ..." />
                                                 <span
                                                     class="text-sm m-l text-red-500">{{ $errors->first('lantai') }}</span>
                                             </div>
 
                                         </div>
-                                        <div class="mb-5 w-full">
-                                            <label for="uraian"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Uraian</label>
-                                            <input type="text" id="uraian" name="uraian"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Masukan Uraian disini ..." required />
+                                        <div class="flex w-full gap-5">
+                                            <div class="mb-5 w-full">
+                                                <label for="tgl_pendapatan"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
+                                                    Pendapatan</label>
+                                                <input type="date" id="tgl_pendapatan" name="tgl_pendapatan"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="Masukan Uraian disini ..." required />
+                                            </div>
+                                            <div class="mb-5 w-full">
+                                                <label for="uraian"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Uraian</label>
+                                                <input type="text" id="uraian" name="uraian"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="Masukan Uraian disini ..." required />
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="flex gap-5">
@@ -153,10 +165,19 @@
             const retur = document.getElementById('retur').value;
             const keterangan = document.getElementById('keterangan').value;
             const penerimaan = document.getElementById('penerimaan').value;
-            const confirmation = confirm(`Apakah data berikut sudah sesuai?\n\nKlasifikasi: ${klasifikasiText}\n\nTanggal Bon: ${tgl_bon}\n\nUraian: ${uraian}\n\Nominal Pendapatan: ${tagihan}\n\Retur: ${retur}\n\nKeterangan: ${keterangan}\n\nPenerimaan: ${penerimaan}\n\nJika sudah sesuai, tekan OK untuk melanjutkan.`);
+            const confirmation = confirm(
+                `Apakah data berikut sudah sesuai?\n\nKlasifikasi: ${klasifikasiText}\n\nTanggal Bon: ${tgl_bon}\n\nUraian: ${uraian}\n\Nominal Pendapatan: ${tagihan}\n\Retur: ${retur}\n\nKeterangan: ${keterangan}\n\nPenerimaan: ${penerimaan}\n\nJika sudah sesuai, tekan OK untuk melanjutkan.`
+                );
             if (confirmation) {
                 document.getElementById('pendapatan-form').submit();
             }
         }
+    </script>
+    <script>
+        const uraianInput = document.getElementById('uraian');
+
+        uraianInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
     </script>
 </x-app-layout>
