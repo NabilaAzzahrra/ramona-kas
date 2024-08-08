@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\JenispengeluaranAPIController;
+use App\Http\Controllers\API\KasAPIController;
 use App\Http\Controllers\API\KlasifikasiAPIController;
 use App\Http\Controllers\API\LaporanAPIController;
 use App\Http\Controllers\API\PendapatanAPIController;
@@ -15,6 +16,7 @@ Route::get('/pendapatan', [PendapatanAPIController::class, 'get_all'])->name('pe
 Route::get('/pengeluaran', [PengeluaranAPIController::class, 'get_all'])->name('pengeluaran.get');
 Route::get('/view', [ViewAPIController::class, 'get_all'])->name('view.get');
 Route::get('/laporan', [LaporanAPIController::class, 'get_all'])->name('laporan.get');
+Route::get('/kas', [KasAPIController::class, 'get_all'])->name('kas.get');
 
 Route::get('/user', function (Request $request) {
     return $request->user();

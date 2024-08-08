@@ -30,6 +30,20 @@
                                             Saldo Awal</a>
                                     </div>
                                     <div>
+                                        <a onclick="editSourceModalKas()" href="#"
+                                            class="flex items-center gap-1 bg-[#2498aa] text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold hover:bg-[#2484aa]">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-plus">
+                                                <line x1="12" y1="5" x2="12" y2="19">
+                                                </line>
+                                                <line x1="5" y1="12" x2="19" y2="12">
+                                                </line>
+                                            </svg>
+                                            Kas Tambahan</a>
+                                    </div>
+                                    <div>
                                         <a href="{{ route('pendapatan.create') }}"
                                             class="flex items-center gap-1 bg-[#0C4B54] hover:bg-[#0c3454] text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
@@ -179,6 +193,48 @@
         </div>
     </div>
 
+    <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModalKas">
+        <div class="fixed inset-0 bg-black opacity-50"></div>
+        <div class="fixed inset-0 flex items-center justify-center">
+            <div class="w-full md:w-1/3 relative bg-white rounded-lg shadow mx-5">
+                <div class="flex items-start justify-between p-3 border-b rounded-t">
+                    <h3 class="font-bold text-slate-800 text-xl" id="title_source_kas">
+                        Input Kas Tambahan
+                    </h3>
+                    <button type="button" onclick="sourceModalCloseKas(this)" data-modal-target="sourceModalKas"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <form action="{{ route('kas.store') }}" method="post" class="px-3">
+                    <div class="flex flex-col p-3 space-y-2">
+                        @csrf
+                        <div>
+                            <label for="tgl_kas" class="block mb-2 text-sm font-medium text-gray-900">Tanggal Kas
+                            </label>
+                            <input type="date" id="tgl_kas" name="tgl_kas"
+                                class="px-3 py-2 shadow rounded w-full bg-slate-50 block text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer hover:shadow-lg"
+                                placeholder="Masukan tanggal kas disini...">
+                        </div>
+                        <div>
+                            <label for="kas" class="block mb-2 text-sm font-medium text-gray-900">Kas Tambahan
+                            </label>
+                            <input type="number" id="kas" name="kas"
+                                class="px-3 py-2 shadow rounded w-full bg-slate-50 block text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500 invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer hover:shadow-lg"
+                                placeholder="Masukan kas awal disini...">
+                        </div>
+                    </div>
+                    <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
+                        <button type="submit" id="formSourceButtonKas" onclick="changeFilterDataRegisterProgram()"
+                            class="bg-[#0C4B54] hover:bg-[#0c3454] flex items-center gap-3 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">Simpan</button>
+                        <button type="button" onclick="sourceModalCloseKas(this)"
+                            data-modal-target="sourceModalKas"
+                            class="bg-red-600 hover:bg-red-700 flex items-center gap-3 text-slate-100 px-4 py-2 rounded-md shadow-md text-sm font-semibold">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -646,6 +702,46 @@
         }
 
         const sourceModalCloseSaldo = (button) => {
+            const modalTarget = button.dataset.modalTarget;
+            console.log(`Modal target: ${modalTarget}`); // Log the modal target
+            const modal = document.getElementById(modalTarget);
+            if (modal) {
+                modal.classList.toggle('hidden');
+            } else {
+                console.error(`Modal with ID ${modalTarget} not found`);
+            }
+        }
+    </script>
+    <script>
+        const editSourceModalKas = (button) => {
+            const formModal = document.getElementById('sourceModalKas');
+            const formElement = document.getElementById('formSourceModal');
+            const url = "{{ route('saldo.store') }}";
+            console.log(url);
+            const titleSource = document.getElementById('title_source_saldo');
+            const formSourceButton = document.getElementById('formSourceButton');
+
+            titleSource.innerText = `Input Kas Awal`;
+            formSourceButton.innerText = 'Simpan';
+
+            const csrfToken = document.createElement('input');
+            csrfToken.setAttribute('type', 'hidden');
+            csrfToken.setAttribute('name', '_token');
+            csrfToken.setAttribute('value', '{{ csrf_token() }}');
+
+            // formElement.appendChild(csrfToken);
+
+            const methodInput = document.createElement('input');
+            methodInput.setAttribute('type', 'hidden');
+            methodInput.setAttribute('name', '_method');
+            methodInput.setAttribute('value', 'PATCH');
+
+            // formElement.appendChild(methodInput);
+
+            formModal.classList.toggle('hidden');
+        }
+
+        const sourceModalCloseKas = (button) => {
             const modalTarget = button.dataset.modalTarget;
             console.log(`Modal target: ${modalTarget}`); // Log the modal target
             const modal = document.getElementById(modalTarget);

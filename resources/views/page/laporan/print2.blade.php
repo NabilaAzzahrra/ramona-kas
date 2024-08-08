@@ -15,7 +15,6 @@
             border: 1px solid black;
         }
 
-        
     </style>
     <style>
         .page-break {
@@ -124,8 +123,20 @@
         @php
             $tot_penerimaan += $tp->penerimaan;
             $p_penerimaan += $tp->penerimaan;
-            // $saldoAwalPenerimaan = $saldo_akhir + $tot_penerimaan;
             $tgl_penerimaan = $tp->tgl_transaksi;
+        @endphp
+    @endforeach
+
+    @php
+        $tot_penerimaan_sebelum = 0;
+        $tgl_penerimaan_sebelum = null;
+        $p_penerimaan_sebelum = 0;
+    @endphp
+    @foreach ($transactions_penerimaan_sebelum as $tp_seb)
+        @php
+            $tot_penerimaan_sebelum += $tp_seb->penerimaan;
+            $p_penerimaan_sebelum += $tp_seb->penerimaan;
+            $tgl_penerimaan_sebelum = $tp_seb->tgl_transaksi;
         @endphp
     @endforeach
 
@@ -159,6 +170,17 @@
                         $saldo_pertama += $sal->pendapatan;
                     @endphp
                 @endforeach
+
+                @php
+                    $saldo_pertama_sebelum = 0;
+                    $tgl_transaksi_sebelum = null;
+                @endphp
+                @foreach ($saldo_sebelum as $sal_seb)
+                    @php
+                        $tgl_transaksi_sebelum = $sal_seb->tgl_transaksi;
+                        $saldo_pertama_sebelum += $sal_seb->pendapatan;
+                    @endphp
+                @endforeach
                 <tr>
                     <td class="text-center bg-[#808080] text-white font-bold">I</td>
                     <td class="text-left pl-4 bg-[#808080] text-white font-bold">SALDO AWAL</td>
@@ -171,7 +193,11 @@
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4 bg-[#808080] text-white font-bold">
-                        {{ number_format($saldo_pertama, 0, ',', '.') }}</td>
+                        {{ number_format($saldo_pertama, 0, ',', '.') }}
+                    </td>
+                    <td class="text-right pr-4 bg-[#808080] text-white font-bold" hidden>
+                        {{ number_format($saldo_pertama_sebelum, 0, ',', '.') }}
+                    </td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-left pl-4">-</td>
@@ -182,14 +208,18 @@
                     <td class="text-left pl-4 bg-[#808080] text-white font-bold">PENERIMAAN</td>
                     <td class="text-center"></td>
                     <td class="text-center">
-                        @if ($tgl_transaksi)
+                        @if ($tgl_penerimaan)
                             {{ date('d/m/y', strtotime($tgl_penerimaan)) }}
                         @endif
                     </td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4 bg-[#808080] text-white font-bold">
-                        {{ number_format($p_penerimaan ?? 0, 0, ',', '.') }}</td>
+                        {{ number_format($p_penerimaan ?? 0, 0, ',', '.') }}
+                    </td>
+                    <td class="text-right pr-4 bg-[#808080] text-white font-bold" hidden>
+                        {{ number_format($p_penerimaan_sebelum ?? 0, 0, ',', '.') }}
+                    </td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-right pr-4">0</td>
                     <td class="text-left pl-4">-</td>
@@ -197,9 +227,49 @@
                 <tr>
                     <td colspan="6"></td>
                     <td class="text-right pr-4 bg-[#808080] text-white font-bold">
-                        {{ number_format(($saldo_pertama ?? 0) + ($p_penerimaan ?? 0), 0, ',', '.') }}</td>
+                        {{ number_format(($saldo_pertama ?? 0) + ($p_penerimaan ?? 0), 0, ',', '.') }}
+                    </td>
+                    <td class="text-right pr-4 bg-[#808080] text-white font-bold" hidden>
+                        {{ number_format(($saldo_pertama_sebelum ?? 0) + ($p_penerimaan_sebelum ?? 0), 0, ',', '.') }}
+                    </td>
                     <td colspan="3"></td>
                 </tr>
+
+                @php
+                    $no = 1;
+                    $tot_umum_sebelum = 0;
+                @endphp
+                @foreach ($transactions_umum_sebelum as $tu_seb)
+                    @php
+                        $jml_tagihan_umum_sebelum = 0;
+                        $jml_retur_umum_sebelum = 0;
+                        $jml_penerimaan_umum_sebelum = 0;
+                        $jml_kekurangan_umum_sebelum = 0;
+                        $jml_kelebihan_umum_sebelum = 0;
+                    @endphp
+                    <tr hidden>
+                        <td class="text-center">{{ $no++ }}</td>
+                        <td class="text-left pl-4">{{ $tu_seb->item }}</td>
+                        <td class="text-center">
+                            {{ $tu_seb->tgl_bon ? date('d/m/y', strtotime($tu_seb->tgl_bon)) : '' }}</td>
+                        <td class="text-center">{{ date('d/m/y', strtotime($tu_seb->tgl_transaksi)) }}</td>
+                        <td class="text-right pr-4">{{ number_format($tu_seb->tagihan, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ $tu_seb->retur }}</td>
+                        <td class="text-right pr-4">
+                            {{ number_format($tu_seb->penerimaan, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($tu_seb->kekurangan, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($tu_seb->kelebihan, 0, ',', '.') }}</td>
+                        <td class="text-left pl-4">{{ $tu_seb->keterangan }}</td>
+                    </tr>
+                    @php
+                        $jml_tagihan_umum_sebelum += $tu_seb->tagihan;
+                        $jml_retur_umum_sebelum += $tu_seb->retur;
+                        $jml_penerimaan_umum_sebelum += $tu_seb->penerimaan;
+                        $jml_kekurangan_umum_sebelum += $tu_seb->kekurangan;
+                        $jml_kelebihan_umum_sebelum += $tu_seb->kelebihan;
+                    @endphp
+                @endforeach
+
                 @php
                     $no = 1;
                     $tot_umum = 0;
@@ -237,6 +307,38 @@
                     <td>II</td>
                     <td class="text-left pl-4">PENJUALAN KREDIT</td>
                 </tr>
+
+                @php
+                    $jml_tagihan_kredit_sebelum = 0;
+                    $jml_retur_kredit_sebelum = 0;
+                    $jml_penerimaan_kredit_sebelum = 0;
+                    $jml_kekurangan_kredit_sebelum = 0;
+                    $jml_kelebihan_kredit_sebelum = 0;
+                    $no = 1;
+                @endphp
+                @foreach ($transactions_kredit_sebelum as $tk_seb)
+                    <tr hidden>
+                        <td class="text-center">{{ $no++ }}</td>
+                        <td class="text-left pl-4">{{ $tk_seb->item }}</td>
+                        <td class="text-center">
+                            {{ $tk_seb->tgl_bon ? date('d/m/y', strtotime($tk_seb->tgl_bon)) : '' }}</td>
+                        <td class="text-center">{{ date('d/m/y', strtotime($tk_seb->tgl_transaksi)) }}</td>
+                        <td class="text-right pr-4">{{ number_format($tk_seb->tagihan, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($tk_seb->retur, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($tk_seb->penerimaan, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($tk_seb->kekurangan, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($tk_seb->kelebihan, 0, ',', '.') }}</td>
+                        <td class="text-left pl-4">{{ $tk_seb->keterangan }}</td>
+                    </tr>
+                    @php
+                        $jml_tagihan_kredit_sebelum += $tk_seb->tagihan;
+                        $jml_retur_kredit_sebelum += $tk_seb->retur;
+                        $jml_penerimaan_kredit_sebelum += $tk_seb->penerimaan;
+                        $jml_kekurangan_kredit_sebelum += $tk_seb->kekurangan;
+                        $jml_kelebihan_kredit_sebelum += $tk_seb->kelebihan;
+                    @endphp
+                @endforeach
+
                 @php
                     $jml_tagihan_kredit = 0;
                     $jml_retur_kredit = 0;
@@ -270,6 +372,37 @@
                     <td>III</td>
                     <td class="text-left pl-4">PENJUALAN TUNAI</td>
                 </tr>
+                @php
+                    $jml_tagihan_tunai_sebelum = 0;
+                    $jml_retur_tunai_sebelum = 0;
+                    $jml_penerimaan_tunai_sebelum = 0;
+                    $jml_kekurangan_tunai_sebelum = 0;
+                    $jml_kelebihan_tunai_sebelum = 0;
+                    $not = 1;
+                @endphp
+                @foreach ($transactions_tunai_sebelum as $tt_seb)
+                    <tr hidden>
+                        <td class="text-center">{{ $not++ }}</td>
+                        <td class="text-left pl-4">{{ $tt_seb->item }}</td>
+                        <td class="text-center">
+                            {{ $tt_seb->tgl_bon ? date('d/m/y', strtotime($tt_seb->tgl_bon)) : '' }}</td>
+                        <td class="text-center">{{ date('d/m/y', strtotime($tt_seb->tgl_transaksi)) }}</td>
+                        <td class="text-right pr-4">{{ number_format($tt_seb->tagihan, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($tt_seb->retur, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($tt_seb->penerimaan, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($tt_seb->kekurangan, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($tt_seb->kelebihan, 0, ',', '.') }}</td>
+                        <td class="text-left pl-4">{{ $tt_seb->keterangan }}</td>
+                    </tr>
+                    @php
+                        $jml_tagihan_tunai_sebelum += $tt_seb->tagihan;
+                        $jml_retur_tunai_sebelum += $tt_seb->retur;
+                        $jml_penerimaan_tunai_sebelum += $tt_seb->penerimaan;
+                        $jml_kekurangan_tunai_sebelum += $tt_seb->kekurangan;
+                        $jml_kelebihan_tunai_sebelum += $tt_seb->kelebihan;
+                    @endphp
+                @endforeach
+
                 @php
                     $jml_tagihan_tunai = 0;
                     $jml_retur_tunai = 0;
@@ -312,27 +445,76 @@
                         ($jml_kelebihan_tunai ?? 0) + ($jml_kelebihan_kredit ?? 0) + ($jml_kelebihan_umum ?? 0);
                     $t_pendapatan = ($jml_penerimaan ?? 0) + ($saldo_pertama ?? 0) + ($p_penerimaan ?? 0);
                 @endphp
+                @php
+                    $jml_tagihan_sebelum =
+                        ($jml_tagihan_tunai_sebelum ?? 0) +
+                        ($jml_tagihan_kredit_sebelum ?? 0) +
+                        ($jml_tagihan_umum_sebelum ?? 0);
+                    $jml_retur_sebelum =
+                        ($jml_retur_tunai_sebelum ?? 0) +
+                        ($jml_retur_kredit_sebelum ?? 0) +
+                        ($jml_retur_umum_sebelum ?? 0);
+                    $jml_penerimaan_sebelum =
+                        ($jml_penerimaan_tunai_sebelum ?? 0) +
+                        ($jml_penerimaan_kredit_sebelum ?? 0) +
+                        ($jml_penerimaan_umum_sebelum ?? 0);
+                    $jml_kekurangan_sebelum =
+                        ($jml_kekurangan_tunai_sebelum ?? 0) +
+                        ($jml_kekurangan_kredit_sebelum ?? 0) +
+                        ($jml_kekurangan_umum_sebelum ?? 0);
+                    $jml_kelebihan_sebelum =
+                        ($jml_kelebihan_tunai_sebelum ?? 0) +
+                        ($jml_kelebihan_kredit_sebelum ?? 0) +
+                        ($jml_kelebihan_umum_sebelum ?? 0);
+                    $t_pendapatan_sebelum =
+                        ($jml_penerimaan_sebelum ?? 0) + ($saldo_pertama_sebelum ?? 0) + ($p_penerimaan_sebelum ?? 0);
+                @endphp
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <th class="bg-[#808080] text-white text-right pr-4">{{ number_format($jml_tagihan, 0, ',', '.') }}
+                    <th class="bg-[#808080] text-white text-right pr-4">
+                        {{ number_format($jml_tagihan, 0, ',', '.') }}
                     </th>
-                    <th class="bg-[#808080] text-white text-right pr-4">{{ number_format($jml_retur, 0, ',', '.') }}
+                    <th class="bg-[#808080] text-white text-right pr-4" hidden>
+                        {{ number_format($jml_tagihan_sebelum, 0, ',', '.') }}
                     </th>
                     <th class="bg-[#808080] text-white text-right pr-4">
-                        {{ number_format($jml_penerimaan, 0, ',', '.') }}</th>
+                        {{ number_format($jml_retur, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4" hidden>
+                        {{ number_format($jml_retur_sebelum, 0, ',', '.') }}
+                    </th>
                     <th class="bg-[#808080] text-white text-right pr-4">
-                        {{ number_format($jml_kekurangan, 0, ',', '.') }}</th>
+                        {{ number_format($jml_penerimaan, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4" hidden>
+                        {{ number_format($jml_penerimaan_sebelum, 0, ',', '.') }}
+                    </th>
                     <th class="bg-[#808080] text-white text-right pr-4">
-                        {{ number_format($jml_kelebihan, 0, ',', '.') }}</th>
+                        {{ number_format($jml_kekurangan, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4" hidden>
+                        {{ number_format($jml_kekurangan_sebelum, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4">
+                        {{ number_format($jml_kelebihan, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4" hidden>
+                        {{ number_format($jml_kelebihan_sebelum, 0, ',', '.') }}
+                    </th>
                     <td></td>
                 </tr>
                 <tr class="bg-[#808080] text-white">
                     <td></td>
                     <th colspan="5">TOTAL PENDAPATAN</th>
-                    <th class="text-right pr-4">{{ number_format($t_pendapatan, 0, ',', '.') }}</th>
+                    <th class="text-right pr-4">
+                        {{ number_format($t_pendapatan, 0, ',', '.') }}
+                    </th>
+                    <th class="text-right pr-4" hidden>
+                        {{ number_format($t_pendapatan_sebelum, 0, ',', '.') }}
+                    </th>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -425,6 +607,54 @@
                         <td></td>
                     </tr>
                 @endforeach
+
+                @php
+                    $t_umum_sebelum = 0;
+                    $t_operasional_sebelum = 0;
+                    $t_bahan_sebelum = 0;
+                    $t_prive_sebelum = 0;
+                    $t_total_sebelum = 0;
+                    $no = 1;
+                @endphp
+                @foreach ($transactions_keluar_sebelum as $t_seb)
+                    @php
+                        $umum_sebelum = 0;
+                        $operasional_sebelum = 0;
+                        $bahan_sebelum = 0;
+                        $prive_sebelum = 0;
+
+                        if ($t_seb->jenis_pengeluaran === 'UMUM') {
+                            $umum_sebelum = $t_seb->pengeluaran;
+                        } elseif ($t_seb->jenis_pengeluaran === 'OPERASIONAL') {
+                            $operasional_sebelum = $t_seb->pengeluaran;
+                        } elseif ($t_seb->jenis_pengeluaran === 'BAHAN') {
+                            $bahan_sebelum = $t_seb->pengeluaran;
+                        } elseif ($t_seb->jenis_pengeluaran === 'PRIVE') {
+                            $prive_sebelum = $t_seb->pengeluaran;
+                        }
+
+                        $total_sebelum = $umum_sebelum + $operasional_sebelum + $bahan_sebelum + $prive_sebelum;
+                        $t_umum_sebelum += $umum_sebelum;
+                        $t_operasional_sebelum += $operasional_sebelum;
+                        $t_bahan_sebelum += $bahan_sebelum;
+                        $t_prive_sebelum += $prive_sebelum;
+                        $t_total_sebelum += $total_sebelum;
+                    @endphp
+                    <tr hidden>
+                        <td class="text-center">{{ $no++ }}</td>
+                        <td class="text-left pl-4">{{ $t_seb->item }}</td>
+                        <td class="text-center">{{ $t_seb->tgl_bon ? date('d/m/y', strtotime($t_seb->tgl_bon)) : '' }}
+                        </td>
+                        <td class="text-center">{{ date('d/m/y', strtotime($t_seb->tgl_transaksi)) }}</td>
+                        <td class="text-right pr-4">{{ number_format($umum_sebelum, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($operasional_sebelum, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($bahan_sebelum, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($prive_sebelum, 0, ',', '.') }}</td>
+                        <td class="text-right pr-4">{{ number_format($total_sebelum, 0, ',', '.') }}</td>
+                        <td>-</td>
+                        <td></td>
+                    </tr>
+                @endforeach
             </tbody>
             <tfoot>
                 <tr>
@@ -432,12 +662,29 @@
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th class="bg-[#808080] text-white text-right pr-4">{{ number_format($t_umum, 0, ',', '.') }}</th>
                     <th class="bg-[#808080] text-white text-right pr-4">
-                        {{ number_format($t_operasional, 0, ',', '.') }}</th>
-                    <th class="bg-[#808080] text-white text-right pr-4">{{ number_format($t_bahan, 0, ',', '.') }}
+                        {{ number_format($t_umum, 0, ',', '.') }}
                     </th>
-                    <th class="bg-[#808080] text-white text-right pr-4">{{ number_format($t_prive, 0, ',', '.') }}
+                    <th class="bg-[#808080] text-white text-right pr-4" hidden>
+                        {{ number_format($t_umum_sebelum, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4">
+                        {{ number_format($t_operasional, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4" hidden>
+                        {{ number_format($t_operasional_sebelum, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4">
+                        {{ number_format($t_bahan, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4" hidden>
+                        {{ number_format($t_bahan_sebelum, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4">
+                        {{ number_format($t_prive, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4" hidden>
+                        {{ number_format($t_prive_sebelum, 0, ',', '.') }}
                     </th>
                     <th></th>
                     <th></th>
@@ -452,11 +699,19 @@
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th class="bg-[#808080] text-white text-right pr-4">{{ number_format($t_total, 0, ',', '.') }}
+                    <th class="bg-[#808080] text-white text-right pr-4">
+                        {{ number_format($t_total, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4" hidden>
+                        {{ number_format($t_total_sebelum, 0, ',', '.') }}
                     </th>
                     <th></th>
                     <th class="bg-[#808080] text-white text-right pr-4">
-                        {{ number_format($t_pendapatan - $t_total, 0, ',', '.') }}</th>
+                        {{ number_format($t_pendapatan - $t_total, 0, ',', '.') }}
+                    </th>
+                    <th class="bg-[#808080] text-white text-right pr-4" hidden>
+                        {{ number_format($t_pendapatan_sebelum - $t_total_sebelum, 0, ',', '.') }}
+                    </th>
                 </tr>
             </tfoot>
 
@@ -465,30 +720,153 @@
 
     {{-- PERHITUNGAN --}}
 
-    <div class="mt-10">
-        <table class="w-full">
-            <thead>
-                <tr>
-                    <th>SALDO AWAL</th>
-                    <th>PENERIMAAN</th>
-                    <th>PENDAPATAN</th>
-                    <th>PENGELUARAN</th>
-                    <th>PENDAPATAN BERSIH</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="text-center">{{ number_format($saldo_pertama ?? 0, 0, ',', '.') }}</td>
-                    <td class="text-center">{{ number_format($p_penerimaan ?? 0, 0, ',', '.') }}</td>
-                    <td class="text-center">{{ number_format($jml_penerimaan ?? 0, 0, ',', '.') }}</td>
-                    <td class="text-center">{{ number_format($t_total ?? 0, 0, ',', '.') }}</td>
-                    <th class="text-center">
-                        {{ number_format(($saldo_pertama ?? 0) + ($p_penerimaan ?? 0) + ($jml_penerimaan ?? 0) - ($t_total ?? 0), 0, ',', '.') }}
-                    </th>
-                </tr>
-            </tbody>
+    <div class="page-break"></div>
+
+    <div class="mt-10 font-bold flex items-center justify-center">
+
+        {{-- SALDO AWAL DARI SALDO AKHIR SEBELUMNYA --}}
+        @php
+            $pendapatan = 0;
+        @endphp
+        @foreach ($saldo_sebelum as $ss)
+            @php
+                $pendapatan = $ss->pendapatan;
+            @endphp
+        @endforeach
+
+        @if ($pendapatan <= 0)
+            @php
+                $sld = $saldo_pertama;
+            @endphp
+        @else
+            @php
+                $sld = $pendapatan;
+            @endphp
+        @endif
+
+
+        {{-- TAMBAHAN KAS (HARI INI)  --}}
+        @forelse ($kas as $k)
+            @php
+                $ks = $k->kas;
+            @endphp
+        @empty
+            @php
+                $ks = 0;
+            @endphp
+        @endforelse
+
+        {{-- SALDO + KAS --}}
+        @php
+            $sld_ks = $sld + $ks;
+        @endphp
+
+        {{-- SALDO KAS + PENDAPATAN (HARI INI) --}}
+        @php
+            $saldokas_pendapatan = $t_pendapatan;
+            // $saldokas_pendapatan_sebelum = $t_pendapatan_sebelum + $ks - $t_total;
+        @endphp
+
+        {{-- SALDO AKHIR --}}
+        @php
+            $saldo_akhir = $saldokas_pendapatan - $t_total;
+        @endphp
+
+
+
+        {{-- SEBELUMNYA --}}
+        @forelse ($kas_sebelum as $kseb)
+            @php
+                $ksebl = $kseb->kas;
+            @endphp
+        @empty
+            @php
+                $ksebl = 0;
+            @endphp
+        @endforelse
+
+        @php
+            $saldokas_pendapatan_sebelum = $t_pendapatan_sebelum + $ksebl - $t_total_sebelum;
+        @endphp
+
+        @php
+            $pendapatan = 0;
+        @endphp
+        @foreach ($saldo_sebelum as $ss)
+            @php
+                $pendapatan = $ss->pendapatan;
+            @endphp
+        @endforeach
+
+        @php
+            $saldokas_sebelum = $ksebl + $pendapatan;
+            $saldokas_sebelumnya = $ks + $saldokas_pendapatan_sebelum;
+        @endphp
+
+        @php
+            $saldokas = $saldokas_sebelumnya + $t_pendapatan;
+        @endphp
+
+        @php
+            $saldokas_akhir = $saldokas - $t_total;
+        @endphp
+
+        <table>
+            <tr>
+                <th class="w-52 text-left text-wrap">SALDO AWAL DARI SALDO AKHIR SEBELUMNYA</th>
+                <th class="w-52 text-right">
+                    {{ number_format($saldokas_pendapatan_sebelum, 0, ',', '.') }}
+                </th>
+                <th rowspan="2" class="pt-5">+</th>
+            </tr>
+            <tr>
+                <th class="w-52 text-left">TAMBAHAN KAS</th>
+
+                <th class="w-52 text-right">
+                    {{ number_format($ks, 0, ',', '.') }}
+                </th>
+            </tr>
+            <tr>
+                <th class="w-52 text-left"></th>
+                <th class="w-52 text-right bg-[#808080] text-white">
+                    {{ number_format($saldokas_sebelumnya, 0, ',', '.') }}</th>
+                <th rowspan="2" class="pt-5">+</th>
+            </tr>
+            <tr>
+                <th class="w-52 text-left">PENJUALAN PENDAPATAN</th>
+                <th class="w-52 text-right">
+                    {{ number_format($t_pendapatan, 0, ',', '.') }}
+                    {{-- {{ number_format($t_pendapatan_sebelum, 0, ',', '.') }} --}}
+                </th>
+            </tr>
+            <tr>
+                <th class="w-52 text-left"></th>
+                <th class="w-52 text-right bg-[#808080] text-white">
+
+                    {{ number_format($saldokas, 0, ',', '.') }}
+                </th>
+                <th rowspan="2" class="pt-5">-</th>
+            </tr>
+            <tr>
+                <th class="w-52 text-left">PENGELUARAN</th>
+                <th class="w-52 text-right">
+                    {{ number_format($t_total ?? 0, 0, ',', '.') }}
+                    {{-- {{ number_format($t_total_sebelum ?? 0, 0, ',', '.') }} --}}
+                </th>
+            </tr>
+            <tr>
+                <th class="w-96 text-left">SALDO AKHIR (PENDAPATAN BERSIH PERHARI)</th>
+                <th class="w-52 text-right bg-[#808080] text-white">
+
+                    {{ number_format($saldokas_akhir ?? 0, 0, ',', '.') }}
+                    {{-- {{ number_format($saldo_akhir_sebelum ?? 0, 0, ',', '.') }} --}}
+                </th>
+            </tr>
         </table>
+
     </div>
+
+
 
 </body>
 <script>

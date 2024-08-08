@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JenispengeluaranController;
+use App\Http\Controllers\KasController;
 use App\Http\Controllers\KlasifikasiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PendapatanController;
@@ -111,6 +112,7 @@ Route::resource('pendapatan', PendapatanController::class)->middleware(['auth'])
 Route::resource('saldo', SaldoController::class)->middleware(['auth']);
 Route::resource('pengeluaran', PengeluaranController::class)->middleware(['auth']);
 Route::resource('laporan', LaporanController::class)->middleware(['auth']);
+Route::resource('kas', KasController::class)->middleware(['auth']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

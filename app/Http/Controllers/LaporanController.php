@@ -30,6 +30,139 @@ class LaporanController extends Controller
         // $transactions = Laporan::whereBetween('tgl_transaksi', [$start_date, $end_date])->get();
         $transactions_kurang = Laporan::where('tgl_transaksi', '<', $start_date)->get();
 
+        $saldo_sebelum = DB::table('view_transaksi')
+            ->leftJoin('pendapatan', 'view_transaksi.id_transaksi', '=', 'pendapatan.id_pendapatan')
+            ->leftJoin('klasifikasi', 'pendapatan.id_klasifikasi', '=', 'klasifikasi.id')
+            ->leftJoin('users as pendapatan_user', 'pendapatan.user', '=', 'pendapatan_user.id')
+            ->leftJoin('pengeluaran', 'view_transaksi.id_transaksi', '=', 'pengeluaran.id_pengeluaran')
+            ->leftJoin('jenis_pengeluaran', 'pengeluaran.id_jenis_pengeluaran', '=', 'jenis_pengeluaran.id')
+            ->leftJoin('users as pengeluaran_user', 'pengeluaran.user', '=', 'pengeluaran_user.id')
+            ->where('view_transaksi.tgl_transaksi', '<', $start_date)
+            ->where('view_transaksi.item', 'SALDO AWAL')
+            ->select(
+                'view_transaksi.*',
+                'pendapatan.*',
+                'klasifikasi.*',
+                'pendapatan_user.*',
+                'pengeluaran.keterangan as keterangan_luar',
+                'jenis_pengeluaran.*',
+                'pengeluaran_user.name as name_luar'
+            )
+            ->get();
+
+        $kas_sebelum = DB::table('kas')
+            ->where('tgl_kas', '<', $start_date)
+            ->select(
+                'kas.*',
+            )
+            ->get();
+
+        $transactions_tunai_sebelum = DB::table('view_transaksi')
+            ->leftJoin('pendapatan', 'view_transaksi.id_transaksi', '=', 'pendapatan.id_pendapatan')
+            ->leftJoin('klasifikasi', 'pendapatan.id_klasifikasi', '=', 'klasifikasi.id')
+            ->leftJoin('users as pendapatan_user', 'pendapatan.user', '=', 'pendapatan_user.id')
+            ->leftJoin('pengeluaran', 'view_transaksi.id_transaksi', '=', 'pengeluaran.id_pengeluaran')
+            ->leftJoin('jenis_pengeluaran', 'pengeluaran.id_jenis_pengeluaran', '=', 'jenis_pengeluaran.id')
+            ->leftJoin('users as pengeluaran_user', 'pengeluaran.user', '=', 'pengeluaran_user.id')
+            ->where('view_transaksi.tgl_transaksi', '<', $start_date)
+            ->where('klasifikasi', 'TUNAI')
+            ->select(
+                'view_transaksi.*',
+                'pendapatan.*',
+                'klasifikasi.*',
+                'pendapatan_user.*',
+                'pengeluaran.keterangan as keterangan_luar',
+                'jenis_pengeluaran.*',
+                'pengeluaran_user.name as name_luar'
+            )
+            ->get();
+        $transactions_kredit_sebelum = DB::table('view_transaksi')
+            ->leftJoin('pendapatan', 'view_transaksi.id_transaksi', '=', 'pendapatan.id_pendapatan')
+            ->leftJoin('klasifikasi', 'pendapatan.id_klasifikasi', '=', 'klasifikasi.id')
+            ->leftJoin('users as pendapatan_user', 'pendapatan.user', '=', 'pendapatan_user.id')
+            ->leftJoin('pengeluaran', 'view_transaksi.id_transaksi', '=', 'pengeluaran.id_pengeluaran')
+            ->leftJoin('jenis_pengeluaran', 'pengeluaran.id_jenis_pengeluaran', '=', 'jenis_pengeluaran.id')
+            ->leftJoin('users as pengeluaran_user', 'pengeluaran.user', '=', 'pengeluaran_user.id')
+            ->where('view_transaksi.tgl_transaksi', '<', $start_date)
+            ->where('klasifikasi', 'KREDIT')
+            ->select(
+                'view_transaksi.*',
+                'pendapatan.*',
+                'klasifikasi.*',
+                'pendapatan_user.*',
+                'pengeluaran.keterangan as keterangan_luar',
+                'jenis_pengeluaran.*',
+                'pengeluaran_user.name as name_luar'
+            )
+            ->get();
+        $transactions_umum_sebelum = DB::table('view_transaksi')
+            ->leftJoin('pendapatan', 'view_transaksi.id_transaksi', '=', 'pendapatan.id_pendapatan')
+            ->leftJoin('klasifikasi', 'pendapatan.id_klasifikasi', '=', 'klasifikasi.id')
+            ->leftJoin('users as pendapatan_user', 'pendapatan.user', '=', 'pendapatan_user.id')
+            ->leftJoin('pengeluaran', 'view_transaksi.id_transaksi', '=', 'pengeluaran.id_pengeluaran')
+            ->leftJoin('jenis_pengeluaran', 'pengeluaran.id_jenis_pengeluaran', '=', 'jenis_pengeluaran.id')
+            ->leftJoin('users as pengeluaran_user', 'pengeluaran.user', '=', 'pengeluaran_user.id')
+            ->where('view_transaksi.tgl_transaksi', '<', $start_date)
+            ->where('klasifikasi', 'UMUM')
+            ->where(function ($query) {
+                $query->where('item', '<>', 'PENERIMAAN');
+            })
+            ->select(
+                'view_transaksi.*',
+                'pendapatan.*',
+                'klasifikasi.*',
+                'pendapatan_user.*',
+                'pengeluaran.keterangan as keterangan_luar',
+                'jenis_pengeluaran.*',
+                'pengeluaran_user.name as name_luar'
+            )
+            ->get();
+        $transactions_penerimaan_sebelum = DB::table('view_transaksi')
+            ->leftJoin('pendapatan', 'view_transaksi.id_transaksi', '=', 'pendapatan.id_pendapatan')
+            ->leftJoin('klasifikasi', 'pendapatan.id_klasifikasi', '=', 'klasifikasi.id')
+            ->leftJoin('users as pendapatan_user', 'pendapatan.user', '=', 'pendapatan_user.id')
+            ->leftJoin('pengeluaran', 'view_transaksi.id_transaksi', '=', 'pengeluaran.id_pengeluaran')
+            ->leftJoin('jenis_pengeluaran', 'pengeluaran.id_jenis_pengeluaran', '=', 'jenis_pengeluaran.id')
+            ->leftJoin('users as pengeluaran_user', 'pengeluaran.user', '=', 'pengeluaran_user.id')
+            ->where('view_transaksi.tgl_transaksi', '<', $start_date)
+            ->where('item', 'PENERIMAAN')
+            ->select(
+                'view_transaksi.*',
+                'pendapatan.*',
+                'klasifikasi.*',
+                'pendapatan_user.*',
+                'pengeluaran.keterangan as keterangan_luar',
+                'jenis_pengeluaran.*',
+                'pengeluaran_user.name as name_luar'
+            )
+            ->get();
+        $transactions_keluar_sebelum = DB::table('view_transaksi')
+            ->leftJoin('pendapatan', 'view_transaksi.id_transaksi', '=', 'pendapatan.id_pendapatan')
+            ->leftJoin('klasifikasi', 'pendapatan.id_klasifikasi', '=', 'klasifikasi.id')
+            ->leftJoin('users as pendapatan_user', 'pendapatan.user', '=', 'pendapatan_user.id')
+            ->leftJoin('pengeluaran', 'view_transaksi.id_transaksi', '=', 'pengeluaran.id_pengeluaran')
+            ->leftJoin('jenis_pengeluaran', 'pengeluaran.id_jenis_pengeluaran', '=', 'jenis_pengeluaran.id')
+            ->leftJoin('users as pengeluaran_user', 'pengeluaran.user', '=', 'pengeluaran_user.id')
+            ->where('view_transaksi.tgl_transaksi', '<', $start_date)
+            ->where('view_transaksi.pengeluaran', '!=', 0)
+            ->select(
+                'view_transaksi.*',
+                'pendapatan.*',
+                'klasifikasi.*',
+                'pendapatan_user.*',
+                'pengeluaran.keterangan as keterangan_luar',
+                'jenis_pengeluaran.*',
+                'pengeluaran_user.name as name_luar'
+            )
+            ->get();
+
+        $kas = DB::table('kas')
+            ->whereBetween('kas.tgl_kas', [$start_date, $end_date])
+            ->select(
+                'kas.*',
+            )
+            ->get();
+
         $saldo = DB::table('view_transaksi')
             ->leftJoin('pendapatan', 'view_transaksi.id_transaksi', '=', 'pendapatan.id_pendapatan')
             ->leftJoin('klasifikasi', 'pendapatan.id_klasifikasi', '=', 'klasifikasi.id')
@@ -199,6 +332,14 @@ class LaporanController extends Controller
                 'start_date',
                 'end_date',
                 'saldo',
+                'saldo_sebelum',
+                'kas',
+                'kas_sebelum',
+                'transactions_tunai_sebelum',
+                'transactions_kredit_sebelum',
+                'transactions_umum_sebelum',
+                'transactions_penerimaan_sebelum',
+                'transactions_keluar_sebelum',
             ));
         } else {
             return view('page.laporan.print2', compact(
@@ -212,6 +353,14 @@ class LaporanController extends Controller
                 'start_date',
                 'end_date',
                 'saldo',
+                'saldo_sebelum',
+                'kas',
+                'kas_sebelum',
+                'transactions_tunai_sebelum',
+                'transactions_kredit_sebelum',
+                'transactions_umum_sebelum',
+                'transactions_penerimaan_sebelum',
+                'transactions_keluar_sebelum',
             ));
         }
 
